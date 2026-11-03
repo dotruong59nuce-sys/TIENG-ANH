@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Lộ trình 22 tuần học tiếng Anh nền tảng cho kỹ sư: phát âm, Speak Now 1–2, VOA Let's Learn English, từ vựng, các thì.">
+<title>Tiếng Anh nền tảng 22 tuần</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap">
+<style>
+/* Layout: a drawing-sheet title block on top, a 22-week schedule bar, then one working pane per view. */
+:root{
+  --paper:#f5f6f3; --sheet:#ffffff; --ink:#1d3557; --ink-2:#3d5a80; --fg:#1b2430; --muted:#5d6b7a;
+  --line:#d3d9df; --line-2:#e6eaee; --accent:#c8551b; --accent-soft:#fbe9df; --ok:#2f7d4f; --ok-soft:#e2f1e8;
+  --grid:rgba(29,53,87,.045);
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10161d; --sheet:#161e27; --ink:#9cc0ea; --ink-2:#7fa3cc; --fg:#e4e9ee; --muted:#9aa7b4;
+  --line:#2b3642; --line-2:#222c37; --accent:#f08a4b; --accent-soft:#3a2418; --ok:#6cc28e; --ok-soft:#173226;
+  --grid:rgba(156,192,234,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10161d; --sheet:#161e27; --ink:#9cc0ea; --ink-2:#7fa3cc; --fg:#e4e9ee; --muted:#9aa7b4;
+  --line:#2b3642; --line-2:#222c37; --accent:#f08a4b; --accent-soft:#3a2418; --ok:#6cc28e; --ok-soft:#173226;
+  --grid:rgba(156,192,234,.05); color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--fg);font:15px/1.55 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+a{color:var(--ink-2)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:16px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* title block */
+.tb{display:grid;grid-template-columns:minmax(0,1fr) auto;border:1.5px solid var(--ink);background:var(--sheet);border-radius:2px}
+.tb-main{padding:14px 16px;border-right:1.5px solid var(--ink);min-width:0}
+.tb-main h1{margin:0;font:700 clamp(22px,4vw,30px)/1.1 var(--f-display);color:var(--ink);letter-spacing:.01em;text-wrap:balance}
+.tb-main p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.tb-cells{display:grid;grid-template-columns:repeat(3,auto)}
+.tb-cell{padding:8px 14px;border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-width:88px}
+.tb-cell:first-child{border-left:0}
+.tb-cell span{font:500 10px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tb-cell b{font:600 20px/1.2 var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+@media (max-width:720px){.tb{grid-template-columns:1fr}.tb-main{border-right:0;border-bottom:1.5px solid var(--ink)}.tb-cells{grid-template-columns:repeat(3,1fr)}.tb-cell{min-width:0}}
+/* nav */
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.nav a{font:500 13px var(--f-mono);text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--sheet);padding:6px 10px;border-radius:var(--r)}
+.nav a[aria-current="page"]{border-color:var(--ink);background:var(--ink);color:var(--sheet)}
+.sync{margin-left:auto;font:400 12px var(--f-mono);color:var(--muted);align-self:center}
+/* schedule bar */
+.sched{margin:14px 0 4px;overflow-x:auto;border:1px solid var(--line);background:var(--sheet);border-radius:var(--r)}
+.sched-in{display:grid;grid-template-columns:repeat(22,minmax(34px,1fr));min-width:760px}
+.ph{grid-row:1;font:500 10px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line-2);border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph:first-child{border-left:0}
+.wk{grid-row:2;display:flex;flex-direction:column;align-items:stretch;text-decoration:none;color:var(--fg);border-left:1px solid var(--line-2);padding:6px 4px 6px;gap:4px}
+.wk:first-of-type{border-left:0}
+.wk .num{font:600 12px var(--f-mono);text-align:center;color:var(--muted)}
+.wk .bar{height:30px;background:var(--line-2);border-radius:3px;position:relative;overflow:hidden}
+.wk .bar i{position:absolute;left:0;right:0;bottom:0;background:var(--ink-2);opacity:.85}
+.wk.full .bar i{background:var(--ok);opacity:1}
+.wk.cur .num{color:var(--accent)}
+.wk.cur .bar{outline:2px solid var(--accent);outline-offset:1px}
+.wk.sel{background:var(--accent-soft)}
+/* panes */
+h2{font:700 22px/1.2 var(--f-display);color:var(--ink);margin:22px 0 4px;letter-spacing:.01em;text-wrap:balance}
+h3{font:600 16px/1.3 var(--f-display);color:var(--ink);margin:18px 0 6px;letter-spacing:.02em}
+.eyebrow{font:500 11px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);margin:2px 0 0;max-width:68ch}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.panel.flush{padding:0;overflow:hidden}
+/* item rows */
+.group{margin-top:14px}
+.group-h{display:flex;align-items:baseline;gap:8px;margin:0 0 6px}
+.group-h b{font:600 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.group-h span{font-size:12px;color:var(--muted)}
+.rows{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid var(--line-2)}
+.row:first-child{border-top:0}
+.row .code{font:500 11px var(--f-mono);color:var(--muted);display:block}
+.row .ttl{font-weight:500;overflow-wrap:anywhere}
+.row.done .ttl{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.chk{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:1.5px solid var(--ink-2);border-radius:4px;margin:0;display:grid;place-content:center;cursor:pointer;background:var(--sheet)}
+.chk:checked{background:var(--ok);border-color:var(--ok)}
+.chk:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 13px var(--f-body);text-decoration:none;color:var(--ink);border:1px solid var(--ink-2);background:transparent;padding:5px 11px;border-radius:var(--r);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--line-2)}
+.btn.pri{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.btn.pri:hover{opacity:.9}
+.btn.ext::after{content:"↗";font-size:12px}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+/* today */
+.today{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.routine{margin:0;padding-left:20px;max-width:70ch}
+.routine li{margin:3px 0}
+.note{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font:500 11px var(--f-mono);padding:1px 6px;border-radius:3px;background:var(--line-2);color:var(--ink);margin-right:6px}
+/* book viewer */
+.book{position:relative}
+.book-bar{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.book-bar span{font:500 12px var(--f-mono);color:var(--muted)}
+.book-scroll{overflow:auto;max-height:80vh;background:var(--line-2);-webkit-overflow-scrolling:touch}
+.book-scroll img{display:block;width:100%;height:auto;margin:0 auto;background:#fff}
+.book-scroll.zoom img{width:200%;max-width:none}
+/* tracks */
+.track{border-top:1px solid var(--line-2);padding:12px 14px}
+.track:first-child{border-top:0}
+.track-h{display:flex;gap:8px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.track-h b{font:600 14px var(--f-display);color:var(--ink);letter-spacing:.02em}
+.track-h code{font:500 11px var(--f-mono);color:var(--muted)}
+.track audio{width:100%;margin:8px 0 6px;height:40px}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.tools .btn{padding:3px 9px;font-size:12px}
+.prompt{font-size:13px;color:var(--muted);font-style:italic;margin:6px 0 0}
+.script{white-space:pre-wrap;font:14px/1.6 var(--f-body);background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:10px 12px;margin:8px 0 0;max-height:340px;overflow:auto}
+.vid{width:100%;display:block;background:#000;aspect-ratio:16/9;max-width:100%}
+/* tense card */
+.formula{display:grid;grid-template-columns:auto minmax(0,1fr);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:6px 0 10px}
+.formula div{padding:8px 12px;border-top:1px solid var(--line-2)}
+.formula div:nth-child(-n+2){border-top:0}
+.formula .k{font:600 13px var(--f-mono);color:var(--accent);background:var(--accent-soft);text-align:center;min-width:64px}
+.formula .v{font:500 14px var(--f-mono);color:var(--fg);overflow-wrap:anywhere}
+.ex{list-style:none;margin:0;padding:0}
+.ex li{padding:7px 0;border-top:1px dashed var(--line)}
+.ex li:first-child{border-top:0}
+.ex .en{font-weight:600}
+.ex .vi{color:var(--muted);font-size:14px}
+.err{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 12px;font-size:14px}
+.err .bad{color:var(--accent)}
+.err .bad::before{content:"✗ ";font-weight:700}
+.err .good{color:var(--ok)}
+.err .good::before{content:"✓ ";font-weight:700}
+@media (max-width:560px){.err{grid-template-columns:minmax(0,1fr)}}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pager{display:flex;justify-content:space-between;gap:8px;margin-top:16px;flex-wrap:wrap}
+.foot{margin-top:36px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.slides img{display:block;width:100%;border-bottom:1px solid var(--line)}
+.unitlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.uc{border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);padding:10px 12px}
+.uc h4{margin:0 0 4px;font:600 14px var(--f-display);color:var(--ink);letter-spacing:.03em}
+.uc ol{margin:0;padding-left:18px;font-size:14px}
+.uc a{text-decoration:none}
+.uc a:hover{text-decoration:underline}
+.mini{font:500 11px var(--f-mono);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+
+<style>
+.ref{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+.ref td{padding:7px 10px;border-top:1px solid var(--line-2);vertical-align:top}
+.ref tr:first-child td{border-top:0}
+.ref td:first-child{font-weight:600;width:46%}
+.ref td:last-child{font-family:var(--f-mono);font-size:13px}
+.pubnote{font-size:13px;color:var(--muted);margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="tb">
+    <div class="tb-main">
+      <h1>Tiếng Anh nền tảng · 22 tuần</h1>
+      <p>Nghe và nói cho kỹ sư: phát âm, Speak Now 1–2, VOA Let's Learn English, từ vựng, các thì cơ bản</p>
+    </div>
+    <div class="tb-cells">
+      <div class="tb-cell"><span>Tuần hiện tại</span><b id="tbWeek">01/22</b></div>
+      <div class="tb-cell"><span>Đã học</span><b id="tbDone">0</b></div>
+      <div class="tb-cell"><span>Hoàn thành</span><b id="tbPct">0%</b></div>
+    </div>
+  </header>
+  <nav class="nav" aria-label="Mục chính">
+    <a href="#home" data-nav="home">Hôm nay</a>
+    <a href="#lib" data-nav="lib">Thư viện</a>
+    <a href="#how" data-nav="how">Cách học</a>
+    <span class="sync" id="sync">Tiến độ lưu trên máy này</span>
+  </nav>
+  <div class="sched" aria-label="Lịch 22 tuần"><div class="sched-in" id="sched"></div></div>
+  <main id="view"></main>
+  <p class="foot">Trang công khai: không đăng lại sách, audio hay video có bản quyền. Học các bài trong sách bằng sách và audio của bạn. Link VOA, BBC, British Council mở trang gốc của họ. Tiến độ lưu trong trình duyệt của máy đang dùng.</p>
+</div>
+
+<script>
+const D={"sn":{"1":[{"n":1,"lessons":[{"n":1,"title":"How are you?","tracks":[{"cd":1,"tr":2,"sec":"Hội thoại A"},{"cd":1,"tr":3,"sec":"Nghe A and B"}],"pages":"2–3"},{"n":2,"title":"Nice to meet you.","tracks":[{"cd":1,"tr":4,"sec":"Hội thoại A"},{"cd":1,"tr":5,"sec":"Hội thoại C"},{"cd":1,"tr":6,"sec":"Phát âm A"}],"pages":"4–5"},{"n":3,"title":"Can you say that again?","tracks":[{"cd":1,"tr":7,"sec":"Hội thoại A"},{"cd":1,"tr":8,"sec":"Nghe A and B"}],"pages":"6–7"},{"n":4,"title":"Nice weather, isn’t it?","tracks":[{"cd":1,"tr":9,"sec":"Hội thoại A"},{"cd":1,"tr":10,"sec":"Hội thoại C"},{"cd":1,"tr":11,"sec":"Phát âm A"}],"pages":"8–9"}],"eiaPages":"10–11"},{"n":2,"lessons":[{"n":5,"title":"I love hip-hop!","tracks":[{"cd":1,"tr":12,"sec":"Hội thoại A"},{"cd":1,"tr":13,"sec":"Nghe A"},{"cd":1,"tr":14,"sec":"Nghe B"}],"pages":"12–13"},{"n":6,"title":"What’s your favorite?","tracks":[{"cd":1,"tr":15,"sec":"Hội thoại A"},{"cd":1,"tr":16,"sec":"Hội thoại C"},{"cd":1,"tr":17,"sec":"Phát âm A"}],"pages":"14–15"},{"n":7,"title":"What time is it?","tracks":[{"cd":1,"tr":18,"sec":"Từ vựng A"},{"cd":1,"tr":19,"sec":"Hội thoại A"},{"cd":1,"tr":20,"sec":"Nghe A and B"}],"pages":"16–17"},{"n":8,"title":"Would you try kayaking?","tracks":[{"cd":1,"tr":21,"sec":"Hội thoại A"},{"cd":1,"tr":22,"sec":"Hội thoại C"},{"cd":1,"tr":23,"sec":"Phát âm A"},{"cd":1,"tr":24,"sec":"Phát âm B"}],"pages":"18–19"}],"eiaPages":"20–21"},{"n":3,"lessons":[{"n":9,"title":"Do you have any brothers?","tracks":[{"cd":1,"tr":25,"sec":"Hội thoại A"},{"cd":1,"tr":26,"sec":"Hội thoại C"},{"cd":1,"tr":27,"sec":"Phát âm A"}],"pages":"22–23"},{"n":10,"title":"She’s pretty smart.","tracks":[{"cd":1,"tr":28,"sec":"Hội thoại A"},{"cd":1,"tr":29,"sec":"Nghe B"}],"pages":"24–25"},{"n":11,"title":"I love your shirt!","tracks":[{"cd":1,"tr":30,"sec":"Hội thoại A"},{"cd":1,"tr":31,"sec":"Hội thoại C"},{"cd":1,"tr":32,"sec":"Phát âm A"},{"cd":1,"tr":33,"sec":"Phát âm B"}],"pages":"26–27"},{"n":12,"title":"What’s she wearing?","tracks":[{"cd":1,"tr":34,"sec":"Hội thoại A"},{"cd":1,"tr":35,"sec":"Nghe A and B"}],"pages":"28–29"}],"eiaPages":"30–31"},{"n":4,"lessons":[{"n":13,"title":"When do you get up?","tracks":[{"cd":1,"tr":36,"sec":"Hội thoại A"},{"cd":1,"tr":37,"sec":"Hội thoại C"},{"cd":1,"tr":38,"sec":"Phát âm A"}],"pages":"32–33"},{"n":14,"title":"When do you get there?","tracks":[{"cd":1,"tr":39,"sec":"Hội thoại A"},{"cd":1,"tr":40,"sec":"Nghe A"}],"pages":"34–35"},{"n":15,"title":"What do you do first?","tracks":[{"cd":1,"tr":41,"sec":"Hội thoại A"},{"cd":1,"tr":42,"sec":"Hội thoại C"},{"cd":1,"tr":43,"sec":"Phát âm A"}],"pages":"36–37"},{"n":16,"title":"What are you doing?","tracks":[{"cd":1,"tr":44,"sec":"Hội thoại A"},{"cd":1,"tr":45,"sec":"Nghe A and B"}],"pages":"38–39"}],"eiaPages":"40–41"},{"n":5,"lessons":[{"n":17,"title":"What’s your place like?","tracks":[{"cd":2,"tr":2,"sec":"Hội thoại A"},{"cd":2,"tr":3,"sec":"Nghe A and B"}],"pages":"42–43"},{"n":18,"title":"Where can I get a lamp?","tracks":[{"cd":2,"tr":4,"sec":"Hội thoại A"},{"cd":2,"tr":5,"sec":"Nghe A and B"}],"pages":"44–45"},{"n":19,"title":"Where’s the mall?","tracks":[{"cd":2,"tr":6,"sec":"Hội thoại A"},{"cd":2,"tr":7,"sec":"Hội thoại C"},{"cd":2,"tr":8,"sec":"Phát âm A"}],"pages":"46–47"},{"n":20,"title":"Take a left.","tracks":[{"cd":2,"tr":9,"sec":"Hội thoại A"},{"cd":2,"tr":10,"sec":"Hội thoại C"},{"cd":2,"tr":11,"sec":"Phát âm A"}],"pages":"48–49"}],"eiaPages":"50–51"},{"n":6,"lessons":[{"n":21,"title":"How much is it?","tracks":[{"cd":2,"tr":12,"sec":"Hội thoại A"},{"cd":2,"tr":13,"sec":"Hội thoại C"},{"cd":2,"tr":14,"sec":"Phát âm A"},{"cd":2,"tr":15,"sec":"Phát âm B"}],"pages":"52–53"},{"n":22,"title":"Will you take $20?","tracks":[{"cd":2,"tr":16,"sec":"Hội thoại A"},{"cd":2,"tr":17,"sec":"Nghe A and B"}],"pages":"54–55"},{"n":23,"title":"I buy them every day.","tracks":[{"cd":2,"tr":18,"sec":"Hội thoại A"},{"cd":2,"tr":19,"sec":"Hội thoại C"},{"cd":2,"tr":20,"sec":"Phát âm A"}],"pages":"56–57"},{"n":24,"title":"It has a cool design.","tracks":[{"cd":2,"tr":21,"sec":"Hội thoại A"},{"cd":2,"tr":22,"sec":"Nghe A and B"}],"pages":"58–59"}],"eiaPages":"60–61"},{"n":7,"lessons":[{"n":25,"title":"Do you eat much fruit?","tracks":[{"cd":2,"tr":23,"sec":"Hội thoại A"},{"cd":2,"tr":24,"sec":"Nghe A and B"}],"pages":"62–63"},{"n":26,"title":"What do we need?","tracks":[{"cd":2,"tr":25,"sec":"Hội thoại A"},{"cd":2,"tr":26,"sec":"Hội thoại C"},{"cd":2,"tr":27,"sec":"Phát âm A"}],"pages":"64–65"},{"n":27,"title":"Do you eat a big lunch?","tracks":[{"cd":2,"tr":28,"sec":"Hội thoại A"},{"cd":2,"tr":29,"sec":"Hội thoại C"},{"cd":2,"tr":30,"sec":"Phát âm A"},{"cd":2,"tr":31,"sec":"Phát âm C"}],"pages":"66–67"},{"n":28,"title":"How does it taste?","tracks":[{"cd":2,"tr":32,"sec":"Hội thoại A"},{"cd":2,"tr":33,"sec":"Nghe A"},{"cd":2,"tr":34,"sec":"Nghe B"}],"pages":"68–69"}],"eiaPages":"70–71"},{"n":8,"lessons":[{"n":29,"title":"I had a great weekend.","tracks":[{"cd":2,"tr":35,"sec":"Hội thoại A"},{"cd":2,"tr":36,"sec":"Nghe A and B"}],"pages":"72–73"},{"n":30,"title":"What time did you call?","tracks":[{"cd":2,"tr":37,"sec":"Hội thoại A"},{"cd":2,"tr":38,"sec":"Hội thoại C"},{"cd":2,"tr":39,"sec":"Phát âm A"},{"cd":2,"tr":40,"sec":"Phát âm C"}],"pages":"74–75"},{"n":31,"title":"You won’t believe this!","tracks":[{"cd":2,"tr":41,"sec":"Hội thoại A"},{"cd":2,"tr":42,"sec":"Hội thoại C"},{"cd":2,"tr":43,"sec":"Nghe A and B"}],"pages":"76–77"},{"n":32,"title":"What are your plans?","tracks":[{"cd":2,"tr":44,"sec":"Hội thoại A"},{"cd":2,"tr":45,"sec":"Phát âm A"}],"pages":"78–79"}],"eiaPages":"80–81"}],"2":[{"n":1,"lessons":[{"n":1,"title":"Where are you from?","tracks":[{"cd":1,"tr":2,"sec":"Hội thoại A"},{"cd":1,"tr":3,"sec":"Hội thoại C"},{"cd":1,"tr":4,"sec":"Phát âm A"}],"pages":"2–3"},{"n":2,"title":"I’m tall and thin.","tracks":[{"cd":1,"tr":5,"sec":"Hội thoại A"},{"cd":1,"tr":6,"sec":"Nghe A and B"}],"pages":"4–5"},{"n":3,"title":"Alice is more serious.","tracks":[{"cd":1,"tr":7,"sec":"Hội thoại A"},{"cd":1,"tr":8,"sec":"Nghe A and B"}],"pages":"6–7"},{"n":4,"title":"All of my friends text.","tracks":[{"cd":1,"tr":9,"sec":"Hội thoại A"},{"cd":1,"tr":10,"sec":"Hội thoại C"},{"cd":1,"tr":11,"sec":"Phát âm A"}],"pages":"8–9"}],"eiaPages":"10–11"},{"n":2,"lessons":[{"n":5,"title":"I’ve never had Thai food.","tracks":[{"cd":1,"tr":12,"sec":"Hội thoại A"},{"cd":1,"tr":13,"sec":"Nghe A and B"}],"pages":"12–13"},{"n":6,"title":"First, grill the bread.","tracks":[{"cd":1,"tr":14,"sec":"Hội thoại A"},{"cd":1,"tr":15,"sec":"Hội thoại C"},{"cd":1,"tr":16,"sec":"Phát âm A"}],"pages":"14–15"},{"n":7,"title":"The service is great.","tracks":[{"cd":1,"tr":17,"sec":"Hội thoại A"},{"cd":1,"tr":18,"sec":"Nghe A and B"}],"pages":"16–17"},{"n":8,"title":"Are you ready to order?","tracks":[{"cd":1,"tr":19,"sec":"Hội thoại A"},{"cd":1,"tr":20,"sec":"Hội thoại C"},{"cd":1,"tr":21,"sec":"Phát âm A"}],"pages":"18–19"}],"eiaPages":"20–21"},{"n":3,"lessons":[{"n":9,"title":"I have a sore throat.","tracks":[{"cd":1,"tr":22,"sec":"Hội thoại A"},{"cd":1,"tr":23,"sec":"Nghe A and B"}],"pages":"22–23"},{"n":10,"title":"What should I do?","tracks":[{"cd":1,"tr":24,"sec":"Hội thoại A"},{"cd":1,"tr":25,"sec":"Hội thoại C"},{"cd":1,"tr":26,"sec":"Phát âm A"},{"cd":1,"tr":27,"sec":"Phát âm B"}],"pages":"24–25"},{"n":11,"title":"I’d love to try that!","tracks":[{"cd":1,"tr":28,"sec":"Hội thoại A"},{"cd":1,"tr":29,"sec":"Nghe A and B"}],"pages":"26–27"},{"n":12,"title":"Soccer is more exciting!","tracks":[{"cd":1,"tr":30,"sec":"Hội thoại A"},{"cd":1,"tr":31,"sec":"Hội thoại C"},{"cd":1,"tr":32,"sec":"Phát âm A"}],"pages":"28–29"}],"eiaPages":"30–31"},{"n":4,"lessons":[{"n":13,"title":"I can write pretty well.","tracks":[{"cd":1,"tr":33,"sec":"Hội thoại A"},{"cd":1,"tr":34,"sec":"Hội thoại C"},{"cd":1,"tr":35,"sec":"Phát âm A"},{"cd":1,"tr":36,"sec":"Phát âm B"}],"pages":"32–33"},{"n":14,"title":"I’d have to have…","tracks":[{"cd":1,"tr":37,"sec":"Hội thoại A"},{"cd":1,"tr":38,"sec":"Nghe A and B"}],"pages":"34–35"},{"n":15,"title":"I travel for free","tracks":[{"cd":1,"tr":39,"sec":"Hội thoại A"},{"cd":1,"tr":40,"sec":"Nghe A and B"}],"pages":"36–37"},{"n":16,"title":"Is the manager there?","tracks":[{"cd":1,"tr":41,"sec":"Hội thoại A"},{"cd":1,"tr":42,"sec":"Hội thoại C"},{"cd":1,"tr":43,"sec":"Phát âm A"},{"cd":1,"tr":44,"sec":"Phát âm B"}],"pages":"38–39"}],"eiaPages":"40–41"},{"n":5,"lessons":[{"n":17,"title":"That sounds fun!","tracks":[{"cd":2,"tr":2,"sec":"Hội thoại A"},{"cd":2,"tr":3,"sec":"Nghe A and B"}],"pages":"42–43"},{"n":18,"title":"I’d love to go.","tracks":[{"cd":2,"tr":4,"sec":"Hội thoại A"},{"cd":2,"tr":5,"sec":"Hội thoại C"},{"cd":2,"tr":6,"sec":"Phát âm A"}],"pages":"44–45"},{"n":19,"title":"I’m sorry, but I can’t.","tracks":[{"cd":2,"tr":7,"sec":"Hội thoại A"},{"cd":2,"tr":8,"sec":"Nghe A and B"}],"pages":"46–47"},{"n":20,"title":"Sorry I’m late.","tracks":[{"cd":2,"tr":9,"sec":"Hội thoại A"},{"cd":2,"tr":10,"sec":"Hội thoại C"},{"cd":2,"tr":11,"sec":"Phát âm A"}],"pages":"48–49"}],"eiaPages":"50–51"},{"n":6,"lessons":[{"n":21,"title":"Did you go alone?","tracks":[{"cd":2,"tr":12,"sec":"Hội thoại A"},{"cd":2,"tr":13,"sec":"Hội thoại C"},{"cd":2,"tr":14,"sec":"Phát âm A"}],"pages":"52–53"},{"n":22,"title":"Which do you prefer?","tracks":[{"cd":2,"tr":15,"sec":"Hội thoại A"},{"cd":2,"tr":16,"sec":"Nghe A and B"}],"pages":"54–55"},{"n":23,"title":"You must get a visa.","tracks":[{"cd":2,"tr":17,"sec":"Hội thoại A"},{"cd":2,"tr":18,"sec":"Hội thoại C"},{"cd":2,"tr":19,"sec":"Phát âm A"}],"pages":"56–57"},{"n":24,"title":"When is the next train?","tracks":[{"cd":2,"tr":20,"sec":"Hội thoại A"},{"cd":2,"tr":21,"sec":"Nghe A and B"}],"pages":"58–59"}],"eiaPages":"60–61"},{"n":7,"lessons":[{"n":25,"title":"I usually wear...","tracks":[{"cd":2,"tr":22,"sec":"Hội thoại A"},{"cd":2,"tr":23,"sec":"Hội thoại C"},{"cd":2,"tr":24,"sec":"Phát âm A"}],"pages":"62–63"},{"n":26,"title":"What do you think?","tracks":[{"cd":2,"tr":25,"sec":"Hội thoại A"},{"cd":2,"tr":26,"sec":"Nghe A and B"}],"pages":"64–65"},{"n":27,"title":"Can you do me a favor?","tracks":[{"cd":2,"tr":27,"sec":"Hội thoại A"},{"cd":2,"tr":28,"sec":"Hội thoại C"},{"cd":2,"tr":29,"sec":"Phát âm A"}],"pages":"66–67"},{"n":28,"title":"What is it used for?","tracks":[{"cd":2,"tr":30,"sec":"Hội thoại A"},{"cd":2,"tr":31,"sec":"Nghe A and B"}],"pages":"68–69"}],"eiaPages":"70–71"},{"n":8,"lessons":[{"n":29,"title":"I think it’s fun!","tracks":[{"cd":2,"tr":32,"sec":"Hội thoại A"},{"cd":2,"tr":33,"sec":"Nghe A and B"}],"pages":"72–73"},{"n":30,"title":"I feel the same way.","tracks":[{"cd":2,"tr":34,"sec":"Hội thoại A"},{"cd":2,"tr":35,"sec":"Hội thoại C"},{"cd":2,"tr":36,"sec":"Phát âm A"},{"cd":2,"tr":37,"sec":"Phát âm B"}],"pages":"74–75"},{"n":31,"title":"What would you do?","tracks":[{"cd":2,"tr":38,"sec":"Hội thoại A"},{"cd":2,"tr":39,"sec":"Nghe A and B"}],"pages":"76–77"},{"n":32,"title":"Then what happened?","tracks":[{"cd":2,"tr":40,"sec":"Hội thoại A"},{"cd":2,"tr":41,"sec":"Hội thoại C"},{"cd":2,"tr":42,"sec":"Phát âm A"}],"pages":"78–79"}],"eiaPages":"80–81"}]},"voa":{"l1":[{"n":1,"title":"Welcome!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-one/3111026.html"},{"n":2,"title":"Hello, I'm Anna!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-2-hello/3113733.html"},{"n":3,"title":"I'm Here!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-3-i-am-here/3126527.html"},{"n":4,"title":"What Is It?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-4/3168920.html"},{"n":5,"title":"Where Are You?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-5-where-are-you/3168971.html"},{"n":6,"title":"Where Is the Gym?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-6-where-is-the-gym/3225958.html"},{"n":7,"title":"What Are You Doing?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-7-what-are-you-doing/3240468.html"},{"n":8,"title":"Are You Busy?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-8-are-you-busy/3253185.html"},{"n":9,"title":"Is It Cold?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-9-is-it-cold/3261789.html"},{"n":10,"title":"Come Over to My Place","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-10/3285228.html"},{"n":11,"title":"This Is My Neighborhood","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-11-this-is-my-neighborhood/3293986.html"},{"n":12,"title":"Meet My Family","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-12-meet-my-family/3301733.html"},{"n":13,"title":"Happy Birthday, William Shakespeare!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-13-happy-birthday-william-shakespeare/3312239.html"},{"n":14,"title":"How About This?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-14-how-about-this/3323771.html"},{"n":15,"title":"I Love People-Watching!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-15-i-love-people-watching/3343720.html"},{"n":16,"title":"Where Are You From?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-16-where-are-you-from/3355849.html"},{"n":17,"title":"Are You Free on Friday?","url":"https://learningenglish.voanews.com/a/are-you-free-on-friday-lets-learn-english/3355785.html"},{"n":18,"title":"She Always Does That","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-18-she-always-does-that/3357748.html"},{"n":19,"title":"When Do I Start?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-19-when-do-you-start/3357760.html"},{"n":20,"title":"What Can You Do?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-20-what-can-you-do/3384429.html"},{"n":21,"title":"Can You Come to the Party?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-21-can-you-come-to-the-party/3406732.html"},{"n":22,"title":"Next Summer...","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-22/3397314.html"},{"n":23,"title":"What Do You Want?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-23-what-do-you-want/3413753.html"},{"n":24,"title":"Yesterday Was Amazing!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-24-yesterday-was-amazing/3439164.html"},{"n":25,"title":"Watch Out!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-25-watch-out/3431138.html"},{"n":26,"title":"This Game Is Fun!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-26-this-game-is-fun/3457248.html"},{"n":27,"title":"I Can't Come In","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-27-i-cant-come-in/3457316.html"},{"n":28,"title":"I Passed It!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-28-i-passed-it/3487865.html"},{"n":29,"title":"A Long Time Ago","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-29-a-long-time-ago/3509519.html"},{"n":30,"title":"Rolling on the River","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-30-rolling-river/3522798.html"},{"n":31,"title":"Take Me Out to the Ball Game","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-31-take-me-out-to-the-ball-game/3535235.html"},{"n":32,"title":"Welcome to the Treehouse!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-32-welcome-treehouse/3547306.html"},{"n":33,"title":"Learning America's Sport","url":"https://learningenglish.voanews.com/a/lesson-33-learning-americas-sport/3555047.html"},{"n":34,"title":"What Will I Do?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-34-what-will-i-do/3566043.html"},{"n":35,"title":"Let's Make Dinner!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-35-lets-make-dinner/3571922.html"},{"n":36,"title":"I Can Fix This!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-36-i-can-fix-this/3568962.html"},{"n":37,"title":"Let's Agree to Disagree","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-37-lets-agree-to-disagree/3574029.html"},{"n":38,"title":"She's My Best Friend!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-38-shes-my-best-friend/3591967.html"},{"n":39,"title":"It's Unbelievable!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-39-its-unbelieveable/3598920.html"},{"n":40,"title":"The Woods Are Alive","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-40-the-woods-are-alive/3630341.html"},{"n":41,"title":"Teamwork Works Best With a Team","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-41-teamwork/3635015.html"},{"n":42,"title":"I Was Minding My Own Business","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-42-i-was-minding-my-own-business/3647264.html"},{"n":43,"title":"Time for Plan B","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-43-time-for-plan-b/3666458.html"},{"n":44,"title":"Making Healthy Choices","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-44-making-healthy-choices/3688552.html"},{"n":45,"title":"This Land is Your Land","url":"https://learningenglish.voanews.com/a/lesson-45-this-land-is-your-land/3710209.html"},{"n":46,"title":"May I Borrow That?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-46-may-i-borrow-that/3723588.html"},{"n":47,"title":"How Can I Help?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-47-how-can-i-help/3737352.html"},{"n":48,"title":"Have You Ever ...?","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-48-have-you-ever/3753664.html"},{"n":49,"title":"Operation Spy!","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-49-operation-spy/3763537.html"},{"n":50,"title":"Back to School","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-50-back-to-school/3771173.html"},{"n":51,"title":"A Good Habit","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-51-a-good-habit/3773577.html"},{"n":52,"title":"Taking Chances","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-52-taking-chances/3805454.html"}],"l2":[{"n":1,"title":"Budget Cuts","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson1/3960391.html"},{"n":2,"title":"The Interview","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-2/3960471.html"},{"n":3,"title":"He Said - She Said","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-3/4027340.html"},{"n":4,"title":"Run Away With the Circus!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-4-run-away-with-the-circus/4034187.html"},{"n":5,"title":"Greatest Vacation of All Time","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-5-greatest-vacation/4035571.html"},{"n":6,"title":"Will It Float?","url":"https://learningenglish.voanews.com/a/lesson-6-will-it-float/4064553.html"},{"n":7,"title":"Tip Your Tour Guide","url":"https://learningenglish.voanews.com/a/lesson-7-tip-your-tour-guide/4064769.html"},{"n":8,"title":"The Best Barbecue","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-8-best-barbecue/4073994.html"},{"n":9,"title":"Pets Are Family, Too!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-9-pets-are-family-too/4074883.html"},{"n":10,"title":"Visit to Peru","url":"https://learningenglish.voanews.com/a/lets-learn-english-lesson-10-visit-to-peru/4079037.html"},{"n":11,"title":"The Big Snow","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-11-the-big-snow/4102755.html"},{"n":12,"title":"Run! Bees!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-12-run-bees/4139015.html"},{"n":13,"title":"Save the Bees!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-13-save-the-bees/4145716.html"},{"n":14,"title":"Made for Each Other","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-14-made-for-each-other/4159000.html"},{"n":15,"title":"Before and After","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-15-before-after/4159057.html"},{"n":16,"title":"Find Your Joy!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-16/4198066.html"},{"n":17,"title":"Flour Baby, Part 1","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-17/4220576.html"},{"n":18,"title":"Flour Baby, Part 2","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-18/4231290.html"},{"n":19,"title":"Movie Night","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-19/4242927.html"},{"n":20,"title":"The Test Drive","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-20/4254704.html"},{"n":21,"title":"Trash to Treasure, Part 1","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-21/4273059.html"},{"n":22,"title":"Trash to Treasure, Part 2","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-22/4283017.html"},{"n":23,"title":"Rock Star","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-23/4287922.html"},{"n":24,"title":"I Feel Super!","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-24/4307612.html"},{"n":25,"title":"Only Human","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-25/4322773.html"},{"n":26,"title":"Look-alikes","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-26/4350607.html"},{"n":27,"title":"Fish out of Water","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-27/4374632.html"},{"n":28,"title":"For the Birds","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-28/4396849.html"},{"n":29,"title":"Where There's Smoke...","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-29/4423736.html"},{"n":30,"title":"Dream a Little Dream","url":"https://learningenglish.voanews.com/a/lets-learn-english-level-2-lesson-30/4465315.html"}]},"voc":[{"n":1,"title":"Talking about language","bookPages":"6–7"},{"n":2,"title":"Learning vocabulary","bookPages":"8–9"},{"n":3,"title":"Have/had/had","bookPages":"10–11"},{"n":4,"title":"Go/went/gone","bookPages":"12–13"},{"n":5,"title":"Do/did/done","bookPages":"14–15"},{"n":6,"title":"Make/made/made","bookPages":"16–17"},{"n":7,"title":"Come/came/come","bookPages":"18–19"},{"n":8,"title":"Take/took/taken","bookPages":"20–21"},{"n":9,"title":"Bring/brought/brought","bookPages":"22–23"},{"n":10,"title":"Get/got/got","bookPages":"24–25"},{"n":11,"title":"Phrasal verbs","bookPages":"26–27"},{"n":12,"title":"Every day things","bookPages":"28–29"},{"n":13,"title":"Talking","bookPages":"30–31"},{"n":14,"title":"Moving","bookPages":"32–33"},{"n":15,"title":"Conjunctions and connecting words","bookPages":"34–35"},{"n":16,"title":"Time words (1): days, months and seasons","bookPages":"36–37"},{"n":17,"title":"Time words (2)","bookPages":"38–39"},{"n":18,"title":"Places","bookPages":"40–41"},{"n":19,"title":"Manner","bookPages":"42–43"},{"n":20,"title":"Irregular verbs","bookPages":"44–45"},{"n":21,"title":"Common uncountable words","bookPages":"46–47"},{"n":22,"title":"Common adjectives: good and bad things","bookPages":"48–49"},{"n":23,"title":"Common adjectives: people","bookPages":"50–51"},{"n":24,"title":"Words and prepositions","bookPages":"52–53"},{"n":25,"title":"Prefixes","bookPages":"54–55"},{"n":26,"title":"Suffixes","bookPages":"56–57"},{"n":27,"title":"Words you may confuse","bookPages":"58–59"},{"n":28,"title":"Birth, marriage and death","bookPages":"60–61"},{"n":29,"title":"The family","bookPages":"62–63"},{"n":30,"title":"Parts of the body","bookPages":"64–65"},{"n":31,"title":"Clothes","bookPages":"66–67"},{"n":32,"title":"Describing people","bookPages":"68–69"},{"n":33,"title":"Health and illness","bookPages":"70–71"},{"n":34,"title":"Feelings","bookPages":"72–73"},{"n":35,"title":"Greetings and other useful phrases","bookPages":"74–75"},{"n":36,"title":"Countries, languages and people","bookPages":"76–77"},{"n":37,"title":"Weather","bookPages":"78–79"},{"n":38,"title":"In the town","bookPages":"80–81"},{"n":39,"title":"In the countryside","bookPages":"82–83"},{"n":40,"title":"Animals and pets","bookPages":"84–85"},{"n":41,"title":"Travelling","bookPages":"86–87"},{"n":42,"title":"Notices","bookPages":"88–89"},{"n":43,"title":"Food and drink","bookPages":"90–91"},{"n":44,"title":"In the kitchen","bookPages":"92–93"},{"n":45,"title":"In the bedroom and bathroom","bookPages":"94–95"},{"n":46,"title":"In the living room","bookPages":"96–97"},{"n":47,"title":"Jobs","bookPages":"98–99"},{"n":48,"title":"At school and university","bookPages":"100–101"},{"n":49,"title":"Communications","bookPages":"102–103"},{"n":50,"title":"Holidays","bookPages":"104–105"},{"n":51,"title":"Shops and shopping","bookPages":"106–107"},{"n":52,"title":"In a hotel","bookPages":"108–109"},{"n":53,"title":"Eating out","bookPages":"110–111"},{"n":54,"title":"Sports","bookPages":"112–113"},{"n":55,"title":"Cinema","bookPages":"114–115"},{"n":56,"title":"Leisure at home","bookPages":"116–117"},{"n":57,"title":"Crime","bookPages":"118–119"},{"n":58,"title":"The media","bookPages":"120–121"},{"n":59,"title":"Everyday problems","bookPages":"122–123"},{"n":60,"title":"Global problems","bookPages":"124–125"}],"g":{"be":{"title":"Present simple: 'to be'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/present-simple-be"},"ps":{"title":"Present simple","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/present-simple"},"qf":{"title":"Question forms","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/question-forms"},"hg":{"title":"Present simple: 'have got'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/present-simple-have-got"},"there":{"title":"Using 'there is' and 'there are'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/using-there-there-are"},"place":{"title":"Prepositions of place: 'in', 'on', 'at'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/prepositions-place"},"time":{"title":"Prepositions of time: 'at', 'in', 'on'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2-grammar/prepositions-of-time-at-in-on"},"count":{"title":"Nouns: countable and uncountable","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/nouns-countable-uncountable"},"quant":{"title":"Quantifiers: 'few', 'a few', 'little' and 'a bit of'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2-grammar/quantifiers-few-a-few-little-a-bit"},"pastps":{"title":"Past continuous and past simple","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/past-continuous-past-simple"},"comp":{"title":"Comparative adjectives","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/comparative-adjectives"},"pp":{"title":"Present perfect","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/present-perfect"},"ingto":{"title":"Verbs followed by '-ing' or infinitive","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/verbs-followed-ing-or-infinitive"},"ability":{"title":"Past ability","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/past-ability"},"fut":{"title":"Future forms: 'will', 'be going to' and present continuous","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/future-forms-will-be-going-present-continuous"},"oblig":{"title":"Modals: permission and obligation","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/modals-permission-obligation"},"purpose":{"title":"Infinitive of purpose","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/a1-a2/infinitive-purpose"},"cond12":{"title":"Conditionals: zero, first and second","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-zero-first-second"},"ppyet":{"title":"Present perfect: 'just', 'yet', 'still' and 'already'","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/present-perfect-just-yet-still-already"},"ppc":{"title":"Present perfect simple and continuous","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/present-perfect-simple-continuous"},"pastp":{"title":"Past perfect","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/past-perfect"},"usedto":{"title":"Past habits: 'used to', 'would' and the past simple","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2-grammar/past-habits-used-to-would-past-simple"},"passive":{"title":"Passives","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/passives"},"cond3":{"title":"Conditionals: third and mixed","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/conditionals-third-mixed"},"rel":{"title":"Relative clauses: defining relative clauses","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/relative-clauses-defining-relative-clauses"},"stative":{"title":"Stative verbs","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/stative-verbs"},"tags":{"title":"Question tags","url":"https://learnenglish.britishcouncil.org/free-resources/grammar/b1-b2/question-tags"}},"tenses":[{"id":"be","vi":"Hiện tại đơn với động từ to be","en":"Present simple: be (am / is / are)","f":[["+","S + am / is / are + danh từ / tính từ / nơi chốn"],["−","S + am / is / are + not + …"],["?","Am / Is / Are + S + …?"]],"use":["Giới thiệu bản thân, nghề nghiệp, quê quán.","Mô tả trạng thái, tính chất, vị trí của người và vật."],"sig":"I am · he / she / it is · you / we / they are · isn't = is not · aren't = are not","ex":[["I'm a BIM engineer.","Tôi là kỹ sư BIM."],["The drawings are on the server.","Bản vẽ ở trên server."],["Is the site office open today?","Hôm nay văn phòng công trường có mở không?"]],"err":[["I engineer.","I'm an engineer."],["She is work here.","She works here."]],"g":["be"]},{"id":"ps","vi":"Thì hiện tại đơn","en":"Present simple","f":[["+","S + V (he / she / it: V-s / V-es)"],["−","S + do / does + not + V"],["?","Do / Does + S + V?"]],"use":["Thói quen, việc lặp lại hằng ngày.","Lịch trình, quy trình cố định.","Sự thật, điều luôn đúng."],"sig":"every day · usually · often · sometimes · never · on Mondays · once a week","ex":[["We check the model every Friday.","Chúng tôi kiểm tra mô hình vào mỗi thứ Sáu."],["The concrete truck arrives at 7 a.m.","Xe bê tông đến lúc 7 giờ sáng."],["Does the contractor send daily reports?","Nhà thầu có gửi báo cáo hằng ngày không?"]],"err":[["He check the drawings.","He checks the drawings."],["Does she works here?","Does she work here?"]],"g":["ps"]},{"id":"pc","vi":"Thì hiện tại tiếp diễn","en":"Present continuous","f":[["+","S + am / is / are + V-ing"],["−","S + am / is / are + not + V-ing"],["?","Am / Is / Are + S + V-ing?"]],"use":["Việc đang diễn ra ngay lúc nói.","Việc đang làm trong giai đoạn này (tuần này, tháng này).","Kế hoạch đã sắp xếp trong tương lai gần (học ở tuần 11)."],"sig":"now · right now · at the moment · currently · this week · Look! · Listen!","ex":[["I'm updating the Revit model right now.","Tôi đang cập nhật mô hình Revit."],["The crew is pouring the slab on level 3.","Đội thi công đang đổ sàn tầng 3."],["Are you working on the MEP coordination this week?","Tuần này anh có làm phối hợp MEP không?"]],"err":[["I am knowing the answer.","I know the answer. (know, want, like, need, understand thường không dùng -ing)"],["She working now.","She is working now."]],"g":["stative"]},{"id":"past","vi":"Thì quá khứ đơn","en":"Past simple","f":[["+","S + V2 / V-ed   (be: was / were)"],["−","S + did not (didn't) + V"],["?","Did + S + V?"]],"use":["Việc đã xảy ra và kết thúc ở một thời điểm xác định trong quá khứ.","Kể lại chuỗi sự việc đã qua."],"sig":"yesterday · last week · two days ago · in 2023 · when I was …","ex":[["We finished the foundation last month.","Chúng tôi làm xong móng tháng trước."],["The inspector came yesterday.","Hôm qua giám sát đã đến."],["Did you send the RFI on Monday?","Anh đã gửi RFI hôm thứ Hai chưa?"]],"err":[["Did you sent it?","Did you send it?"],["I goed to the site.","I went to the site. (động từ bất quy tắc: xem bảng 360 động từ trong ổ của bạn)"]],"g":["pastps"]},{"id":"pastc","vi":"Thì quá khứ tiếp diễn","en":"Past continuous","f":[["+","S + was / were + V-ing"],["−","S + was / were + not + V-ing"],["?","Was / Were + S + V-ing?"]],"use":["Việc đang diễn ra tại một thời điểm trong quá khứ.","Việc đang diễn ra thì một việc khác xen vào (việc xen vào dùng quá khứ đơn)."],"sig":"at 9 a.m. yesterday · while · when · all morning","ex":[["I was checking the clash report when the power went off.","Tôi đang kiểm tra báo cáo va chạm thì mất điện."],["At 10 a.m. yesterday, the crane was lifting the steel beams.","Lúc 10 giờ sáng qua, cần cẩu đang nâng dầm thép."],["What were you doing when the site manager called?","Anh đang làm gì lúc chỉ huy trưởng gọi?"]],"err":[["When he called, I checked the report. (ý là đang kiểm tra)","When he called, I was checking the report."]],"g":["pastps"]},{"id":"pp","vi":"Thì hiện tại hoàn thành","en":"Present perfect","f":[["+","S + have / has + V3"],["−","S + have / has + not + V3"],["?","Have / Has + S + V3?"]],"use":["Trải nghiệm: đã từng / chưa từng, không nói khi nào.","Việc vừa xong, kết quả còn ở hiện tại.","Việc bắt đầu trong quá khứ và kéo dài đến nay (for / since)."],"sig":"ever · never · already · yet · just · for · since · so far · recently","ex":[["I've never used Navisworks before.","Tôi chưa bao giờ dùng Navisworks."],["We have already submitted the shop drawings.","Chúng tôi đã nộp bản vẽ shop rồi."],["She has worked here since 2021.","Cô ấy làm ở đây từ năm 2021."]],"err":[["I have sent it yesterday.","I sent it yesterday. (có thời điểm cụ thể thì dùng quá khứ đơn)"],["I work here for three years.","I have worked here for three years."]],"g":["pp","ppyet"]},{"id":"fut","vi":"Tương lai: will, be going to, hiện tại tiếp diễn","en":"Future forms","f":[["will","S + will + V   (won't = will not) — quyết định ngay lúc nói, dự đoán, lời hứa"],["going to","S + am / is / are + going to + V — kế hoạch đã định, dự đoán có dấu hiệu"],["HTTD","S + am / is / are + V-ing — lịch hẹn đã sắp xếp (có giờ, có người)"]],"use":["Chọn dạng theo mức độ đã lên kế hoạch: will (vừa quyết định) → going to (đã định) → hiện tại tiếp diễn (đã hẹn cụ thể)."],"sig":"tomorrow · next week · soon · in two days · I think … · probably","ex":[["I'll call the supplier now.","Tôi sẽ gọi nhà cung cấp ngay bây giờ."],["We're going to start the roof next week.","Tuần sau chúng tôi sẽ bắt đầu làm mái."],["We're meeting the client at 2 p.m. tomorrow.","Chiều mai 2 giờ chúng tôi gặp chủ đầu tư."]],"err":[["I will to send it.","I will send it."],["Tomorrow I go to the site. (ý nói kế hoạch)","Tomorrow I'm going to the site."]],"g":["fut"]},{"id":"ppc","vi":"Thì hiện tại hoàn thành tiếp diễn","en":"Present perfect continuous","f":[["+","S + have / has + been + V-ing"],["−","S + have / has + not + been + V-ing"],["?","Have / Has + S + been + V-ing?"]],"use":["Nhấn mạnh quá trình kéo dài từ quá khứ đến nay (thường vẫn còn tiếp).","Giải thích kết quả nhìn thấy được của một quá trình."],"sig":"for · since · all day · how long … ?","ex":[["We've been waiting for the approval for two weeks.","Chúng tôi chờ phê duyệt đã hai tuần."],["How long have you been working on this project?","Anh làm dự án này bao lâu rồi?"],["I've been checking drawings all morning.","Cả sáng nay tôi kiểm tra bản vẽ."]],"err":[["I've been checking 20 drawings. (nói số lượng, kết quả)","I've checked 20 drawings."]],"g":["ppc"]},{"id":"pastp","vi":"Thì quá khứ hoàn thành","en":"Past perfect","f":[["+","S + had + V3"],["−","S + had not (hadn't) + V3"],["?","Had + S + V3?"]],"use":["Việc xảy ra trước một việc khác trong quá khứ."],"sig":"before · after · already · by the time · when","ex":[["When I arrived, the meeting had already started.","Khi tôi đến, cuộc họp đã bắt đầu rồi."],["The concrete had cured before we removed the formwork.","Bê tông đã đủ ngày bảo dưỡng trước khi chúng tôi tháo cốp pha."]],"err":[["When I arrived, the meeting already started. (ý là đã bắt đầu trước)","When I arrived, the meeting had already started."]],"g":["pastp"]},{"id":"usedto","vi":"Used to: thói quen trong quá khứ","en":"used to + V","f":[["+","S + used to + V"],["−","S + didn't use to + V"],["?","Did + S + use to + V?"]],"use":["Thói quen hoặc trạng thái trước đây, nay không còn."],"sig":"used to · before · when I was …","ex":[["I used to work at a design office.","Trước đây tôi làm ở văn phòng thiết kế."],["Did you use to draw by hand?","Trước đây anh có vẽ tay không?"]],"err":[["As a young boy, I used to swimming in the river.","As a young boy, I used to swim in the river."]],"g":["usedto"]},{"id":"passive","vi":"Câu bị động","en":"Passive voice","f":[["chung","S + be (chia theo thì) + V3 (+ by …)"],["HTĐ / QKĐ","is / are + V3 · was / were + V3"],["HTHT / TL","has / have been + V3 · will be + V3"]],"use":["Khi việc được làm hoặc kết quả quan trọng hơn người làm.","Dùng rất nhiều trong báo cáo, biên bản, quy trình, thuyết minh kỹ thuật."],"sig":"by … · được / bị … · thường gặp trong văn bản kỹ thuật","ex":[["The slab is poured in two stages.","Sàn được đổ thành hai đợt."],["The drawings were approved yesterday.","Bản vẽ đã được duyệt hôm qua."],["The beams have been installed.","Dầm đã được lắp xong."],["The report will be sent tomorrow.","Báo cáo sẽ được gửi vào ngày mai."]],"err":[["The drawings approved yesterday.","The drawings were approved yesterday."]],"g":["passive"]}],"weeks":[{"n":1,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Nguyên âm, giới thiệu bản thân với to be","items":[{"t":"pr","r":"v"},{"t":"bbcpron"},{"t":"voa","lv":1,"n":1},{"t":"voa","lv":1,"n":2},{"t":"voa","lv":1,"n":3},{"t":"voa","lv":1,"n":4},{"t":"tense","id":"be"},{"t":"g","id":"be"},{"t":"voc","n":1},{"t":"voc","n":2},{"t":"voc","n":3}]},{"n":2,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Phụ âm, ôn phát âm, hiện tại đơn","items":[{"t":"pr","r":"c"},{"t":"pr","r":"r"},{"t":"voa","lv":1,"n":5},{"t":"voa","lv":1,"n":6},{"t":"voa","lv":1,"n":7},{"t":"voa","lv":1,"n":8},{"t":"tense","id":"ps"},{"t":"g","id":"ps"},{"t":"voc","n":4},{"t":"voc","n":5},{"t":"voc","n":6}]},{"n":3,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Speak Now 1 · Unit 1–2: chào hỏi, sở thích, thời gian","items":[{"t":"sn","lv":1,"l":1},{"t":"sn","lv":1,"l":2},{"t":"sn","lv":1,"l":3},{"t":"sn","lv":1,"l":4},{"t":"eia","lv":1,"u":1},{"t":"sn","lv":1,"l":5},{"t":"sn","lv":1,"l":6},{"t":"sn","lv":1,"l":7},{"t":"sn","lv":1,"l":8},{"t":"eia","lv":1,"u":2},{"t":"voa","lv":1,"n":9},{"t":"voa","lv":1,"n":10},{"t":"voa","lv":1,"n":11},{"t":"voa","lv":1,"n":12},{"t":"g","id":"qf"},{"t":"g","id":"time"},{"t":"voc","n":7},{"t":"voc","n":8},{"t":"voc","n":9}]},{"n":4,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Speak Now 1 · Unit 3–4: gia đình, quần áo, thói quen hằng ngày","items":[{"t":"sn","lv":1,"l":9},{"t":"sn","lv":1,"l":10},{"t":"sn","lv":1,"l":11},{"t":"sn","lv":1,"l":12},{"t":"eia","lv":1,"u":3},{"t":"sn","lv":1,"l":13},{"t":"sn","lv":1,"l":14},{"t":"sn","lv":1,"l":15},{"t":"sn","lv":1,"l":16},{"t":"eia","lv":1,"u":4},{"t":"voa","lv":1,"n":13},{"t":"voa","lv":1,"n":14},{"t":"voa","lv":1,"n":15},{"t":"voa","lv":1,"n":16},{"t":"tense","id":"pc"},{"t":"g","id":"hg"},{"t":"voc","n":10},{"t":"voc","n":11},{"t":"voc","n":12}]},{"n":5,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Speak Now 1 · Unit 5–6: nơi ở, chỉ đường, mua sắm","items":[{"t":"sn","lv":1,"l":17},{"t":"sn","lv":1,"l":18},{"t":"sn","lv":1,"l":19},{"t":"sn","lv":1,"l":20},{"t":"eia","lv":1,"u":5},{"t":"sn","lv":1,"l":21},{"t":"sn","lv":1,"l":22},{"t":"sn","lv":1,"l":23},{"t":"sn","lv":1,"l":24},{"t":"eia","lv":1,"u":6},{"t":"voa","lv":1,"n":17},{"t":"voa","lv":1,"n":18},{"t":"voa","lv":1,"n":19},{"t":"voa","lv":1,"n":20},{"t":"g","id":"there"},{"t":"g","id":"place"},{"t":"voc","n":13},{"t":"voc","n":14},{"t":"voc","n":15}]},{"n":6,"phase":"Giai đoạn 1 · Phát âm và Speak Now 1","focus":"Speak Now 1 · Unit 7–8: ăn uống, kể chuyện, kế hoạch","items":[{"t":"sn","lv":1,"l":25},{"t":"sn","lv":1,"l":26},{"t":"sn","lv":1,"l":27},{"t":"sn","lv":1,"l":28},{"t":"eia","lv":1,"u":7},{"t":"sn","lv":1,"l":29},{"t":"sn","lv":1,"l":30},{"t":"sn","lv":1,"l":31},{"t":"sn","lv":1,"l":32},{"t":"eia","lv":1,"u":8},{"t":"voa","lv":1,"n":21},{"t":"voa","lv":1,"n":22},{"t":"voa","lv":1,"n":23},{"t":"voa","lv":1,"n":24},{"t":"g","id":"count"},{"t":"tense","id":"past"},{"t":"voc","n":16},{"t":"voc","n":17},{"t":"voc","n":18}]},{"n":7,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 1: làm quen, mô tả người, so sánh","items":[{"t":"sn","lv":2,"l":1},{"t":"sn","lv":2,"l":2},{"t":"sn","lv":2,"l":3},{"t":"sn","lv":2,"l":4},{"t":"eia","lv":2,"u":1},{"t":"voa","lv":1,"n":25},{"t":"voa","lv":1,"n":26},{"t":"voa","lv":1,"n":27},{"t":"voa","lv":1,"n":28},{"t":"g","id":"comp"},{"t":"g","id":"tags"},{"t":"voc","n":19},{"t":"voc","n":20},{"t":"voc","n":21}]},{"n":8,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 2: món ăn, nhà hàng, trải nghiệm","items":[{"t":"sn","lv":2,"l":5},{"t":"sn","lv":2,"l":6},{"t":"sn","lv":2,"l":7},{"t":"sn","lv":2,"l":8},{"t":"eia","lv":2,"u":2},{"t":"voa","lv":1,"n":29},{"t":"voa","lv":1,"n":30},{"t":"voa","lv":1,"n":31},{"t":"voa","lv":1,"n":32},{"t":"tense","id":"pp"},{"t":"g","id":"pp"},{"t":"voc","n":22},{"t":"voc","n":23},{"t":"voc","n":24}]},{"n":9,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 3: sức khỏe, lời khuyên, thể thao","items":[{"t":"sn","lv":2,"l":9},{"t":"sn","lv":2,"l":10},{"t":"sn","lv":2,"l":11},{"t":"sn","lv":2,"l":12},{"t":"eia","lv":2,"u":3},{"t":"voa","lv":1,"n":33},{"t":"voa","lv":1,"n":34},{"t":"voa","lv":1,"n":35},{"t":"voa","lv":1,"n":36},{"t":"g","id":"ingto"},{"t":"voc","n":25},{"t":"voc","n":26},{"t":"voc","n":27}]},{"n":10,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 4: kỹ năng, công việc, gọi điện","items":[{"t":"sn","lv":2,"l":13},{"t":"sn","lv":2,"l":14},{"t":"sn","lv":2,"l":15},{"t":"sn","lv":2,"l":16},{"t":"eia","lv":2,"u":4},{"t":"voa","lv":1,"n":37},{"t":"voa","lv":1,"n":38},{"t":"voa","lv":1,"n":39},{"t":"voa","lv":1,"n":40},{"t":"tense","id":"pastc"},{"t":"g","id":"ability"},{"t":"voc","n":28},{"t":"voc","n":29},{"t":"voc","n":30}]},{"n":11,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 5: lời mời, nhận lời và từ chối, xin lỗi","items":[{"t":"sn","lv":2,"l":17},{"t":"sn","lv":2,"l":18},{"t":"sn","lv":2,"l":19},{"t":"sn","lv":2,"l":20},{"t":"eia","lv":2,"u":5},{"t":"voa","lv":1,"n":41},{"t":"voa","lv":1,"n":42},{"t":"voa","lv":1,"n":43},{"t":"voa","lv":1,"n":44},{"t":"tense","id":"fut"},{"t":"g","id":"fut"},{"t":"voc","n":31},{"t":"voc","n":32},{"t":"voc","n":33}]},{"n":12,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 6: du lịch, thủ tục, phương tiện","items":[{"t":"sn","lv":2,"l":21},{"t":"sn","lv":2,"l":22},{"t":"sn","lv":2,"l":23},{"t":"sn","lv":2,"l":24},{"t":"eia","lv":2,"u":6},{"t":"voa","lv":1,"n":45},{"t":"voa","lv":1,"n":46},{"t":"voa","lv":1,"n":47},{"t":"voa","lv":1,"n":48},{"t":"g","id":"oblig"},{"t":"voc","n":34},{"t":"voc","n":35},{"t":"voc","n":36}]},{"n":13,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 7: trang phục, ý kiến, nhờ giúp đỡ, đồ vật dùng để làm gì","items":[{"t":"sn","lv":2,"l":25},{"t":"sn","lv":2,"l":26},{"t":"sn","lv":2,"l":27},{"t":"sn","lv":2,"l":28},{"t":"eia","lv":2,"u":7},{"t":"voa","lv":1,"n":49},{"t":"voa","lv":1,"n":50},{"t":"voa","lv":1,"n":51},{"t":"voa","lv":1,"n":52},{"t":"g","id":"purpose"},{"t":"voc","n":37},{"t":"voc","n":38},{"t":"voc","n":39}]},{"n":14,"phase":"Giai đoạn 2 · Speak Now 2","focus":"Unit 8: bày tỏ quan điểm, giả định, kể chuyện","items":[{"t":"sn","lv":2,"l":29},{"t":"sn","lv":2,"l":30},{"t":"sn","lv":2,"l":31},{"t":"sn","lv":2,"l":32},{"t":"eia","lv":2,"u":8},{"t":"g","id":"cond12"},{"t":"voc","n":40},{"t":"voc","n":41},{"t":"voc","n":42}]},{"n":15,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"VOA Level 2 bắt đầu · ôn Speak Now 2 Unit 1","items":[{"t":"voa","lv":2,"n":1},{"t":"voa","lv":2,"n":2},{"t":"voa","lv":2,"n":3},{"t":"voa","lv":2,"n":4},{"t":"bbc6","w":15},{"t":"rev","lv":2,"u":1},{"t":"g","id":"ppyet"},{"t":"voc","n":43},{"t":"voc","n":44},{"t":"voc","n":45}]},{"n":16,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Hiện tại hoàn thành tiếp diễn · ôn Unit 2","items":[{"t":"voa","lv":2,"n":5},{"t":"voa","lv":2,"n":6},{"t":"voa","lv":2,"n":7},{"t":"voa","lv":2,"n":8},{"t":"bbc6","w":16},{"t":"rev","lv":2,"u":2},{"t":"tense","id":"ppc"},{"t":"g","id":"ppc"},{"t":"voc","n":46},{"t":"voc","n":47},{"t":"voc","n":48}]},{"n":17,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Quá khứ hoàn thành · ôn Unit 3","items":[{"t":"voa","lv":2,"n":9},{"t":"voa","lv":2,"n":10},{"t":"voa","lv":2,"n":11},{"t":"voa","lv":2,"n":12},{"t":"bbc6","w":17},{"t":"rev","lv":2,"u":3},{"t":"tense","id":"pastp"},{"t":"g","id":"pastp"},{"t":"voc","n":49},{"t":"voc","n":50},{"t":"voc","n":51}]},{"n":18,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Used to · ôn Unit 4","items":[{"t":"voa","lv":2,"n":13},{"t":"voa","lv":2,"n":14},{"t":"voa","lv":2,"n":15},{"t":"voa","lv":2,"n":16},{"t":"bbc6","w":18},{"t":"rev","lv":2,"u":4},{"t":"tense","id":"usedto"},{"t":"g","id":"usedto"},{"t":"voc","n":52},{"t":"voc","n":53},{"t":"voc","n":54}]},{"n":19,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Câu bị động (văn bản kỹ thuật) · ôn Unit 5","items":[{"t":"voa","lv":2,"n":17},{"t":"voa","lv":2,"n":18},{"t":"voa","lv":2,"n":19},{"t":"voa","lv":2,"n":20},{"t":"bbc6","w":19},{"t":"rev","lv":2,"u":5},{"t":"tense","id":"passive"},{"t":"g","id":"passive"},{"t":"voc","n":55},{"t":"voc","n":56},{"t":"voc","n":57}]},{"n":20,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Câu điều kiện · ôn Unit 6","items":[{"t":"voa","lv":2,"n":21},{"t":"voa","lv":2,"n":22},{"t":"voa","lv":2,"n":23},{"t":"voa","lv":2,"n":24},{"t":"bbc6","w":20},{"t":"rev","lv":2,"u":6},{"t":"g","id":"cond3"},{"t":"voc","n":58},{"t":"voc","n":59},{"t":"voc","n":60}]},{"n":21,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Mệnh đề quan hệ · ôn Unit 7","items":[{"t":"voa","lv":2,"n":25},{"t":"voa","lv":2,"n":26},{"t":"voa","lv":2,"n":27},{"t":"voa","lv":2,"n":28},{"t":"bbc6","w":21},{"t":"rev","lv":2,"u":7},{"t":"g","id":"rel"}]},{"n":22,"phase":"Giai đoạn 3 · Nghe nhiều, củng cố thì","focus":"Tổng ôn · ôn Unit 8","items":[{"t":"voa","lv":2,"n":29},{"t":"voa","lv":2,"n":30},{"t":"bbc6","w":22},{"t":"rev","lv":2,"u":8},{"t":"tense","id":"passive"}]}],"pr":{"v":{"title":"Nguyên âm (Vowels)","slides":[]},"c":{"title":"Phụ âm (Consonants)","slides":[]},"r":{"title":"Ôn tập phát âm (Pronunciation Review)","slides":[]},"tracks":[]}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+/* ---------- progress store ---------- */
+let done={};
+try{done=JSON.parse(localStorage.getItem('en22-done')||'{}')||{}}catch(e){done={}}
+let ref=null, writing=false, pending=false;
+function setSync(t){$('#sync').textContent=t}
+function saveLocal(){try{localStorage.setItem('en22-done',JSON.stringify(done))}catch(e){}}
+async function flush(){
+  if(!ref){return}
+  if(writing){pending=true;return}
+  writing=true;
+  try{await ref.set({done:{...done},at:Date.now()});setSync('Tiến độ: đã lưu trên web')}
+  catch(e){setSync('Tiến độ: lưu trên máy này (chưa lưu được lên web)')}
+  writing=false;
+  if(pending){pending=false;flush()}
+}
+let flushT=null;
+function toggle(k,on){
+  if(on)done[k]=Date.now(); else delete done[k];
+  saveLocal(); refreshCounts();
+  clearTimeout(flushT); flushT=setTimeout(flush,600);
+}
+(async function initStore(){
+  const fallback=setTimeout(()=>{if(!ref)setSync('Tiến độ: lưu trên máy này')},10000);
+  try{
+    if(!window.claude||!claude.use){clearTimeout(fallback);setSync('Tiến độ: lưu trên máy này');return}
+    const [user,db]=await Promise.all([claude.use('user'),claude.use('db')]);
+    if(!user||!db){clearTimeout(fallback);setSync('Tiến độ: lưu trên máy này');return}
+    const id=await user.id();
+    if(!id){clearTimeout(fallback);setSync('Tiến độ: lưu trên máy này (hãy đăng nhập để đồng bộ)');return}
+    const r=db.collection('data/users/'+id).doc('progress');
+    const snap=await r.get(); clearTimeout(fallback);
+    const remote=(snap.exists&&snap.data()&&snap.data().done)||{};
+    const merged={...remote};
+    let changed=false;
+    for(const k in done){if(!(k in merged)){merged[k]=done[k];changed=true}}
+    done=merged; saveLocal(); ref=r;
+    setSync('Tiến độ: đã đồng bộ trên web');
+    render(); if(changed)flush();
+  }catch(e){clearTimeout(fallback);setSync('Tiến độ: lưu trên máy này')}
+})();
+/* ---------- item model ---------- */
+const SN=D.sn, U=lv=>SN[lv];
+function lessonOf(lv,l){const u=SN[lv][Math.floor((l-1)/4)];return {u,les:u.lessons[(l-1)%4]}}
+const TENSE=Object.fromEntries(D.tenses.map(t=>[t.id,t]));
+const BBC_PRON='https://www.bbc.co.uk/learningenglish/english/features/pronunciation';
+const BBC6='https://www.bbc.co.uk/learningenglish/english/features/6-minute-english';
+function info(it){
+  switch(it.t){
+    case 'pr':{const p=D.pr[it.r];return{k:'pr-'+it.r,grp:'pron',code:'PHÁT ÂM',title:p.title,href:'#pr-'+it.r}}
+    case 'bbcpron':return{k:'bbc-pron',grp:'pron',code:'BBC',title:'The Sounds of English: xem video từng âm IPA',url:BBC_PRON}
+    case 'sn':{const {les}=lessonOf(it.lv,it.l);return{k:`sn${it.lv}-${it.l}`,grp:'sn',code:`SN${it.lv} · L${pad(it.l)} · tr. ${les.pages}`,title:les.title,href:`#sn${it.lv}-${it.l}`}}
+    case 'eia':{const u=SN[it.lv][it.u-1];return{k:`sn${it.lv}-u${it.u}`,grp:'sn',code:`SN${it.lv} · Unit ${it.u} · video`,title:'English in Action + ôn tập Unit '+it.u,href:`#sn${it.lv}-u${it.u}`}}
+    case 'rev':return{k:`rv${it.lv}-u${it.u}`,grp:'sn',code:`ÔN SN${it.lv} · Unit ${it.u}`,title:'Shadowing lại 4 bài và video Unit '+it.u,href:`#unit${it.lv}-${it.u}`}
+    case 'voa':{const v=D.voa['l'+it.lv][it.n-1];return{k:`voa${it.lv}-${it.n}`,grp:'voa',code:`VOA L${it.lv} · bài ${it.n}`,title:v.title,url:v.url}}
+    case 'voc':{const v=D.voc[it.n-1];return{k:'voc-'+it.n,grp:'voc',code:`VOCAB · unit ${it.n}`,title:v.title,href:'#voc-'+it.n}}
+    case 'tense':{const t=TENSE[it.id];return{k:'t-'+it.id,grp:'gram',code:'THÌ · tóm tắt tiếng Việt',title:t.vi,href:'#t-'+it.id}}
+    case 'g':{const g=D.g[it.id];return{k:'g-'+it.id,grp:'gram',code:'BRITISH COUNCIL · bài tập',title:g.title,url:g.url}}
+    case 'bbc6':return{k:'bbc6-'+it.w,grp:'voa',code:'BBC · 6 Minute English',title:'Nghe 2 tập bất kỳ, chép lại 5 câu hay',url:BBC6}
+  }
+}
+const GROUPS={pron:['Phát âm','làm trước, mỗi ngày 10 phút'],sn:['Speak Now','nói: mỗi bài 1 buổi'],voa:['Nghe','VOA Let’s Learn English, BBC'],gram:['Thì và ngữ pháp','đọc tóm tắt rồi làm bài'],voc:['Từ vựng','Vocabulary in Use Elementary']};
+const WEEKS=D.weeks.map(w=>({...w,items:w.items.map(info)}));
+function weekPct(w){const n=w.items.filter(i=>done[i.k]).length;return[n,w.items.length]}
+function currentWeek(){for(const w of WEEKS){const[a,b]=weekPct(w);if(a<b)return w}return WEEKS[WEEKS.length-1]}
+function refreshCounts(){
+  let a=0,b=0;WEEKS.forEach(w=>{const[x,y]=weekPct(w);a+=x;b+=y});
+  $('#tbDone').textContent=a+'/'+b;$('#tbPct').textContent=Math.round(a*100/b)+'%';
+  const cw=currentWeek();$('#tbWeek').textContent=pad(cw.n)+'/22';
+  drawSched();
+}
+let selWeek=null;
+function drawSched(){
+  const cw=currentWeek();
+  const phases=[[1,6,'Giai đoạn 1 · Phát âm, Speak Now 1'],[7,14,'Giai đoạn 2 · Speak Now 2'],[15,22,'Giai đoạn 3 · Nghe nhiều, củng cố thì']];
+  let h=phases.map(([a,b,t])=>`<div class="ph" style="grid-column:${a}/${b+1}" title="${esc(t)}">${esc(t)}</div>`).join('');
+  h+=WEEKS.map(w=>{const[a,b]=weekPct(w);const p=b?a/b:0;
+    return `<a class="wk${p===1?' full':''}${w===cw?' cur':''}${selWeek===w.n?' sel':''}" href="#w${w.n}" title="Tuần ${w.n}: ${esc(w.focus)} (${a}/${b})"><span class="num">${pad(w.n)}</span><span class="bar"><i style="height:${Math.round(p*100)}%"></i></span></a>`}).join('');
+  $('#sched').innerHTML=h;
+}
+/* ---------- rows ---------- */
+function rowHTML(i){
+  const d=!!done[i.k];
+  const open=i.url?`<a class="btn ext" href="${esc(i.url)}" target="_blank" rel="noopener">Mở</a>`:`<a class="btn pri" href="${i.href}">Học</a>`;
+  return `<li class="row${d?' done':''}"><input type="checkbox" class="chk" id="c-${i.k}" data-k="${i.k}" ${d?'checked':''} aria-label="Đã học: ${esc(i.title)}"><label for="c-${i.k}"><span class="code">${esc(i.code)}</span><span class="ttl">${esc(i.title)}</span></label>${open}</li>`;
+}
+function groupsHTML(items){
+  const by={};items.forEach(i=>(by[i.grp]=by[i.grp]||[]).push(i));
+  return ['pron','sn','voa','gram','voc'].filter(g=>by[g]).map(g=>`<section class="group"><div class="group-h"><b>${GROUPS[g][0]}</b><span>${GROUPS[g][1]}</span></div><ul class="rows">${by[g].map(rowHTML).join('')}</ul></section>`).join('');
+}
+function doneBox(k,label){const d=!!done[k];return `<label class="btn${d?' on':''}" style="gap:8px"><input type="checkbox" class="chk" data-k="${k}" ${d?'checked':''} style="width:18px;height:18px"> ${label||'Đã học xong'}</label>`}
+document.addEventListener('change',e=>{
+  const c=e.target.closest('input[data-k]');if(!c)return;
+  toggle(c.dataset.k,c.checked);
+  const row=c.closest('.row');if(row)row.classList.toggle('done',c.checked);
+  const lab=c.closest('label.btn');if(lab)lab.classList.toggle('on',c.checked);
+  document.querySelectorAll(`input[data-k="${CSS.escape(c.dataset.k)}"]`).forEach(x=>{if(x!==c)x.checked=c.checked});
+});
+/* ---------- views ---------- */
+function vHome(){
+  selWeek=null;
+  const w=currentWeek();const[a,b]=weekPct(w);
+  const next=w.items.filter(i=>!done[i.k]).slice(0,4);
+  return `<p class="eyebrow">Tuần ${pad(w.n)} / 22 · ${esc(w.phase)}</p>
+  <h2>${esc(w.focus)}</h2>
+  <p class="lead">Tuần này đã xong ${a}/${b} mục. Học khoảng 45–60 phút mỗi ngày, 5–6 ngày/tuần. Bấm vào ô số tuần ở thanh trên để xem lịch tuần khác.</p>
+  <div class="grid2" style="margin-top:14px">
+    <section><h3>Việc tiếp theo</h3><ul class="rows">${next.map(rowHTML).join('')||'<li class="row"><span></span><span>Tuần này đã xong. Chuyển sang tuần sau.</span><span></span></li>'}</ul>
+      <div class="pager"><a class="btn" href="#w${w.n}">Xem cả tuần ${w.n}</a></div></section>
+    <section class="panel"><h3 style="margin-top:0">Một buổi học mẫu (khoảng 50 phút)</h3>
+      <ol class="routine">
+        <li><b>10′ phát âm hoặc từ vựng:</b> đọc to, che nghĩa và tự kiểm tra.</li>
+        <li><b>20′ Speak Now:</b> nghe hội thoại, mở lời thoại, nói nhại theo (shadowing) ở tốc độ 0.75× rồi 1×.</li>
+        <li><b>15′ VOA:</b> xem 1 bài Anna, nhại lại các câu ở phần Speaking.</li>
+        <li><b>5′ tự nói:</b> dùng mẫu câu vừa học để nói về công việc của bạn, ghi âm bằng điện thoại.</li>
+      </ol>
+      <p class="note">Ngữ pháp và thì: đọc tóm tắt vào ngày ít bận, sau đó làm bài trên British Council.</p>
+    </section>
+  </div>`;
+}
+function vWeek(n){
+  const w=WEEKS[n-1];if(!w)return vHome();selWeek=n;
+  const[a,b]=weekPct(w);
+  return `<p class="eyebrow">Tuần ${pad(n)} / 22 · ${esc(w.phase)}</p><h2>${esc(w.focus)}</h2>
+  <p class="lead">Đã xong ${a}/${b} mục. Không cần theo đúng thứ tự trong ngày, chỉ cần xong trong tuần.</p>
+  ${groupsHTML(w.items)}
+  <div class="pager">${n>1?`<a class="btn" href="#w${n-1}">← Tuần ${n-1}</a>`:'<span></span>'}${n<22?`<a class="btn" href="#w${n+1}">Tuần ${n+1} →</a>`:''}</div>`;
+}
+function bookHTML(src,label){
+  return `<div class="panel flush book"><div class="book-bar"><span>${esc(label)}</span><span class="tools"><button class="btn" data-zoom>Phóng to</button><a class="btn ext" href="${src}" target="_blank" rel="noopener">Mở ảnh</a></span></div><div class="book-scroll"><img src="${src}" alt="${esc(label)}" loading="lazy"></div></div>`;
+}
+function trackHTML(t,i){
+  return `<div class="track"><div class="track-h"><b>${i+1}. ${esc(t.sec||'Audio')}</b><code>CD${t.cd} · Track ${t.tr}</code></div>
+  <audio controls preload="none" src="${t.src}"></audio>
+  <div class="tools"><button class="btn" data-rate="0.75">0.75×</button><button class="btn on" data-rate="1">1×</button><button class="btn" data-loop>Lặp lại</button><button class="btn" data-script>Lời thoại</button></div>
+  ${t.prompt?`<p class="prompt">${esc(t.prompt)}</p>`:''}<div class="script" hidden>${esc(t.text)}</div></div>`;
+}
+function vLesson(lv,l){
+  const {u,les}=lessonOf(lv,l);const k=`sn${lv}-${l}`;
+  const prev=l>1?`<a class="btn" href="#sn${lv}-${l-1}">← Bài ${l-1}</a>`:'<span></span>';
+  const nx=l%4===0?`<a class="btn" href="#sn${lv}-u${u.n}">Video Unit ${u.n} →</a>`:`<a class="btn" href="#sn${lv}-${l+1}">Bài ${l+1} →</a>`;
+  return `<p class="eyebrow">Speak Now ${lv} · Unit ${u.n} · Bài ${l} · trang ${les.pages}</p><h2>${esc(les.title)}</h2>
+  <p class="lead">Học theo thứ tự trong sách: Vocabulary → Conversation → Language Booster → Pronunciation hoặc Listening → Speak with Confidence. Audio của từng phần nằm ở cột bên cạnh.</p>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  <div class="grid2">${bookHTML(les.img,`SN${lv} · trang ${les.pages}`)}
+  <section class="panel flush" aria-label="Audio"><div class="book-bar"><span>${les.tracks.length} track audio</span><span class="mini">Nhại theo ở 0.75× rồi 1×</span></div>${les.tracks.map(trackHTML).join('')}</section></div>
+  <div class="pager">${prev}<a class="btn" href="#unit${lv}-${u.n}">Cả Unit ${u.n}</a>${nx}</div>`;
+}
+function vEia(lv,un){
+  const u=SN[lv][un-1];const k=`sn${lv}-u${un}`;
+  const v=u.video?`<video class="vid" controls preload="metadata" playsinline src="${esc(u.video)}"></video>`:`<div class="panel">Video đang được tải lên.</div>`;
+  return `<p class="eyebrow">Speak Now ${lv} · Unit ${un} · trang ${u.eiaPages}</p><h2>English in Action + ôn tập Unit ${un}</h2>
+  <p class="lead">Xem video 2 lần: lần 1 không nhìn sách, lần 2 vừa xem vừa làm bài trên trang. Sau đó làm phần ôn tập: tự đóng cả hai vai.</p>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  <div class="grid2"><section class="panel flush">${v}</section>${bookHTML(u.eia,`SN${lv} · trang ${u.eiaPages}`)}</div>
+  <div class="pager"><a class="btn" href="#sn${lv}-${un*4}">← Bài ${un*4}</a><a class="btn" href="#unit${lv}-${un}">Cả Unit ${un}</a>${un<8?`<a class="btn" href="#sn${lv}-${un*4+1}">Bài ${un*4+1} →</a>`:''}</div>`;
+}
+function vUnit(lv,un){
+  const u=SN[lv][un-1];
+  const rk=`rv${lv}-u${un}`;
+  return `<p class="eyebrow">Speak Now ${lv} · Unit ${un}</p><h2>Unit ${un}: ${u.lessons.map(x=>esc(x.title)).join(' · ')}</h2>
+  <p class="lead">Ôn lại: mở từng bài, bật lời thoại, nói nhại theo cho đến khi nói trôi chảy không cần nhìn.</p>
+  ${lv===2?`<div style="margin:10px 0">${doneBox(rk,'Đã ôn xong Unit '+un)}</div>`:''}
+  <ul class="rows">${u.lessons.map(x=>rowHTML(info({t:'sn',lv,l:x.n}))).join('')}${rowHTML(info({t:'eia',lv,u:un}))}</ul>`;
+}
+function vVoc(n){
+  const v=D.voc[n-1];const k='voc-'+n;
+  return `<p class="eyebrow">English Vocabulary in Use · Elementary · Unit ${n} · trang ${v.bookPages}</p><h2>${esc(v.title)}</h2>
+  <p class="lead">Trang trái: đọc to từng từ, tra cách phát âm trên Cambridge Dictionary nếu chưa chắc. Trang phải: làm bài ra giấy, rồi mở đáp án bên dưới.</p>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  ${bookHTML(v.img,`Unit ${n} · trang ${v.bookPages}`)}
+  <details class="panel" style="margin-top:14px"><summary><b>Đáp án Unit ${n}</b> <span class="note">(tìm mục ${n}.1, ${n}.2 …)</span></summary>${v.key.map(s=>`<img src="${s}" alt="Đáp án" loading="lazy" style="width:100%;margin-top:10px;background:#fff">`).join('')}</details>
+  <div class="pager">${n>1?`<a class="btn" href="#voc-${n-1}">← Unit ${n-1}</a>`:'<span></span>'}${n<60?`<a class="btn" href="#voc-${n+1}">Unit ${n+1} →</a>`:''}</div>`;
+}
+function vTense(id){
+  const t=TENSE[id];if(!t)return vHome();const k='t-'+id;
+  return `<p class="eyebrow">Thì và ngữ pháp · ${esc(t.en)}</p><h2>${esc(t.vi)}</h2>
+  <div style="margin:10px 0">${doneBox(k,'Đã nắm được')}</div>
+  <div class="grid2"><section class="panel"><h3 style="margin-top:0">Công thức</h3>
+  <div class="formula">${t.f.map(([a,b])=>`<div class="k">${esc(a)}</div><div class="v">${esc(b)}</div>`).join('')}</div>
+  <h3>Dùng khi</h3><ul class="routine">${t.use.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+  <h3>Dấu hiệu nhận biết</h3><p style="margin:0;font-family:var(--f-mono);font-size:14px">${esc(t.sig)}</p></section>
+  <section class="panel"><h3 style="margin-top:0">Ví dụ ở công trường / văn phòng</h3><ul class="ex">${t.ex.map(([e,v])=>`<li><div class="en">${esc(e)}</div><div class="vi">${esc(v)}</div></li>`).join('')}</ul>
+  <h3>Lỗi hay gặp</h3><div class="err">${t.err.map(([b,g])=>`<div class="bad">${esc(b)}</div><div class="good">${esc(g)}</div>`).join('')}</div>
+  <h3>Luyện tập</h3><p class="note" style="margin-top:0">Tự đặt 3 câu về công việc của bạn bằng thì này, rồi làm bài:</p>
+  <div class="tools">${t.g.map(g=>`<a class="btn ext" href="${esc(D.g[g].url)}" target="_blank" rel="noopener">${esc(D.g[g].title)}</a>`).join('')}</div></section></div>`;
+}
+function vPron(r){
+  const p=D.pr[r];const k='pr-'+r;
+  const tr=r==='r'?'':`<section class="panel flush" style="margin-top:14px"><div class="book-bar"><span>Audio luyện tập trong bộ của cô Linh</span></div>${D.pr.tracks.map((t,i)=>`<div class="track"><div class="track-h"><b>${t.id.replace('Track','Track ')}</b></div><audio controls preload="none" src="${t.src}"></audio><div class="tools"><button class="btn" data-rate="0.75">0.75×</button><button class="btn on" data-rate="1">1×</button><button class="btn" data-loop>Lặp lại</button></div></div>`).join('')}</section>`;
+  return `<p class="eyebrow">Phát âm · bài của cô Linh</p><h2>${esc(p.title)}</h2>
+  <p class="lead">Đọc từng cặp từ trên slide thật to, chú ý độ dài và khẩu hình. Sau mỗi âm, mở BBC <i>The Sounds of English</i> xem video của âm đó.</p>
+  <div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap">${doneBox(k)}<a class="btn ext" href="${BBC_PRON}" target="_blank" rel="noopener">BBC: The Sounds of English</a><a class="btn ext" href="https://dictionary.cambridge.org/dictionary/english-vietnamese/" target="_blank" rel="noopener">Cambridge Dictionary</a></div>
+  <div class="grid2"><section class="panel flush slides">${p.slides.map(s=>`<img src="${s}" alt="slide" loading="lazy">`).join('')}</section>${tr||'<span></span>'}</div>`;
+}
+function vLib(){
+  selWeek=null;
+  const sn=lv=>`<h3>Speak Now ${lv}</h3><div class="unitlist">${SN[lv].map(u=>`<div class="uc"><h4><a href="#unit${lv}-${u.n}">Unit ${u.n}</a></h4><ol start="${u.lessons[0].n}">${u.lessons.map(x=>`<li><a href="#sn${lv}-${x.n}">${esc(x.title)}</a></li>`).join('')}</ol><a class="mini" href="#sn${lv}-u${u.n}">▶ Video English in Action</a></div>`).join('')}</div>`;
+  const voa=lv=>`<details class="panel" style="margin-top:8px"><summary><b>VOA Let's Learn English · Level ${lv}</b> <span class="note">(${D.voa['l'+lv].length} bài)</span></summary><ol style="columns:2 240px;margin:10px 0 0">${D.voa['l'+lv].map(v=>`<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.title)}</a></li>`).join('')}</ol></details>`;
+  return `<p class="eyebrow">Thư viện</p><h2>Tất cả bài học</h2>
+  <p class="lead">Mở thẳng bài bất kỳ, không cần theo lịch.</p>
+  <h3>Phát âm</h3><div class="tools"><a class="btn" href="#pr-v">Nguyên âm</a><a class="btn" href="#pr-c">Phụ âm</a><a class="btn" href="#pr-r">Ôn tập</a><a class="btn ext" href="${BBC_PRON}" target="_blank" rel="noopener">BBC Sounds of English</a></div>
+  ${sn(1)}${sn(2)}
+  <h3>Nghe</h3>${voa(1)}${voa(2)}<div class="tools" style="margin-top:8px"><a class="btn ext" href="${BBC6}" target="_blank" rel="noopener">BBC 6 Minute English</a></div>
+  <h3>Thì</h3><div class="tools">${D.tenses.map(t=>`<a class="btn" href="#t-${t.id}">${esc(t.vi)}</a>`).join('')}</div>
+  <h3>Từ vựng · Vocabulary in Use Elementary</h3><details class="panel"><summary><b>60 unit</b></summary><ol style="columns:3 200px;margin:10px 0 0">${D.voc.map(v=>`<li><a href="#voc-${v.n}">${esc(v.title)}</a></li>`).join('')}</ol></details>
+  <h3>Công cụ tra cứu</h3><div class="tools"><a class="btn ext" href="https://dictionary.cambridge.org/dictionary/english-vietnamese/" target="_blank" rel="noopener">Cambridge Dictionary Anh–Việt</a><a class="btn ext" href="https://youglish.com/" target="_blank" rel="noopener">YouGlish: nghe từ trong câu thật</a></div>`;
+}
+function vHow(){
+  selWeek=null;
+  return `<p class="eyebrow">Cách học</p><h2>Học thế nào cho chắc nền</h2>
+  <div class="grid2" style="margin-top:12px"><section class="panel"><h3 style="margin-top:0">Một bài Speak Now</h3><ol class="routine">
+  <li><b>Vocabulary:</b> đọc to từng từ, đánh dấu từ chưa biết.</li>
+  <li><b>Conversation:</b> nghe 2 lần không nhìn chữ, sau đó bấm <i>Lời thoại</i> và nghe lại.</li>
+  <li><b>Shadowing:</b> chọn 0.75×, bật <i>Lặp lại</i>, nói đè theo băng 3 lần. Sau đó chuyển 1× và làm thêm 2 lần.</li>
+  <li><b>Language Booster:</b> đọc to các mẫu câu, thay bằng thông tin của bạn (dự án, phần mềm, công trường).</li>
+  <li><b>Speak with Confidence:</b> tự nói cả hai vai, ghi âm bằng điện thoại, nghe lại và sửa.</li></ol></section>
+  <section class="panel"><h3 style="margin-top:0">VOA, từ vựng, thì</h3><ol class="routine">
+  <li><b>VOA:</b> xem video bài học, bật phụ đề tiếng Anh, nhại theo Anna ở phần Speaking. Mỗi bài có phần tóm tắt ngữ pháp và quiz.</li>
+  <li><b>Vocabulary in Use:</b> học trang trái, làm bài trang phải ra giấy, chấm bằng phần Đáp án.</li>
+  <li><b>Thì:</b> đọc tóm tắt tiếng Việt trong app, tự đặt 3 câu về công việc, rồi làm bài British Council.</li>
+  <li><b>Đánh dấu:</b> tích ô bên trái mỗi mục khi xong. Tiến độ được lưu theo tài khoản, mở máy nào cũng thấy.</li></ol>
+  <p class="note">Tuần bận thì cứ học chậm lại. Trang <i>Hôm nay</i> luôn đưa ra mục chưa xong tiếp theo.</p></section></div>`;
+}
+/* ---------- router ---------- */
+function render(){
+  const h=(location.hash||'#home').slice(1);let m,html;
+  if(h==='lib')html=vLib();
+  else if(h==='how')html=vHow();
+  else if(m=h.match(/^w(\d+)$/))html=vWeek(+m[1]);
+  else if(m=h.match(/^sn([12])-(\d+)$/))html=vLesson(+m[1],+m[2]);
+  else if(m=h.match(/^sn([12])-u(\d)$/))html=vEia(+m[1],+m[2]);
+  else if(m=h.match(/^unit([12])-(\d)$/))html=vUnit(+m[1],+m[2]);
+  else if(m=h.match(/^voc-(\d+)$/))html=vVoc(+m[1]);
+  else if(m=h.match(/^t-(\w+)$/))html=vTense(m[1]);
+  else if(m=h.match(/^pr-([vcr])$/))html=vPron(m[1]);
+  else html=vHome();
+  $('#view').innerHTML=html;
+  document.querySelectorAll('[data-nav]').forEach(a=>a.toggleAttribute('aria-current',false));
+  const nav=h==='lib'?'lib':h==='how'?'how':(h==='home'||!h)?'home':null;
+  if(nav)document.querySelector(`[data-nav="${nav}"]`).setAttribute('aria-current','page');
+  refreshCounts();
+}
+let lastHash=null;
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0)});
+/* audio + viewer tools */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const tr=b.closest('.track');
+  if(b.hasAttribute('data-rate')&&tr){const a=tr.querySelector('audio');a.playbackRate=+b.dataset.rate;a.defaultPlaybackRate=+b.dataset.rate;tr.querySelectorAll('[data-rate]').forEach(x=>x.classList.toggle('on',x===b))}
+  else if(b.hasAttribute('data-loop')&&tr){const a=tr.querySelector('audio');a.loop=!a.loop;b.classList.toggle('on',a.loop)}
+  else if(b.hasAttribute('data-script')&&tr){const s=tr.querySelector('.script');s.hidden=!s.hidden;b.classList.toggle('on',!s.hidden)}
+  else if(b.hasAttribute('data-zoom')){const s=b.closest('.book').querySelector('.book-scroll');s.classList.toggle('zoom');b.textContent=s.classList.contains('zoom')?'Thu nhỏ':'Phóng to'}
+});
+document.addEventListener('play',e=>{if(e.target.tagName!=='AUDIO')return;const tr=e.target.closest('.track');const on=tr&&tr.querySelector('[data-rate].on');if(on)e.target.playbackRate=+on.dataset.rate;document.querySelectorAll('audio').forEach(a=>{if(a!==e.target)a.pause()})},true);
+
+/* ---- public build: no copyrighted pages, audio or scripts ---- */
+const PUB_NOTE='Trang công khai không đăng lại sách và audio có bản quyền. Mở sách và đĩa audio của bạn theo đúng trang và track dưới đây.';
+function refBox(title,rows,extra){return `<section class="panel"><h3 style="margin-top:0">${esc(title)}</h3><p class="pubnote">${PUB_NOTE}</p><table class="ref">${rows.map(([a,b])=>`<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('')}</table>${extra||''}</section>`}
+const CAMB='https://dictionary.cambridge.org/dictionary/english-vietnamese/';
+function snSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li><b>Vocabulary:</b> đọc to từng từ, đánh dấu từ chưa biết, tra phát âm trên <a href="${CAMB}" target="_blank" rel="noopener">Cambridge Dictionary</a>.</li>
+<li><b>Conversation:</b> nghe 2 lần không nhìn chữ, sau đó vừa nghe vừa đọc lời thoại trong sách.</li>
+<li><b>Shadowing:</b> nghe từng câu, dừng lại và nói theo, lặp 3–5 lần đến khi trôi chảy.</li>
+<li><b>Language Booster:</b> đọc to mẫu câu, thay bằng thông tin công việc của bạn (dự án, phần mềm, công trường).</li>
+<li><b>Speak with Confidence:</b> tự nói cả hai vai, ghi âm bằng điện thoại, nghe lại và sửa.</li></ol></section>`}
+function eiaSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li>Xem video English in Action 2 lần: lần 1 không nhìn sách, lần 2 vừa xem vừa làm bài trên trang sách.</li>
+<li>Làm phần ôn tập của Unit: tự đóng cả hai vai trong các hội thoại.</li>
+<li>Ghi âm 1 phút tóm tắt nội dung video bằng lời của bạn.</li></ol></section>`}
+function vocSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li>Trang trái: đọc to từng từ và ví dụ, tra phát âm nếu chưa chắc.</li>
+<li>Trang phải: làm bài ra giấy, không nhìn trang trái.</li>
+<li>Chấm bằng Answer key ở cuối sách, chép từ sai vào sổ.</li>
+<li>Đặt 3 câu với từ mới về công việc của bạn và đọc to.</li></ol>
+<div class="tools"><a class="btn ext" href="${CAMB}" target="_blank" rel="noopener">Cambridge Dictionary</a><a class="btn ext" href="https://youglish.com/" target="_blank" rel="noopener">YouGlish</a></div></section>`}
+
+function vLesson(lv,l){const {u,les}=lessonOf(lv,l);const k=`sn${lv}-${l}`;
+  const prev=l>1?`<a class="btn" href="#sn${lv}-${l-1}">← Bài ${l-1}</a>`:'<span></span>';
+  const nx=l%4===0?`<a class="btn" href="#sn${lv}-u${u.n}">Video Unit ${u.n} →</a>`:`<a class="btn" href="#sn${lv}-${l+1}">Bài ${l+1} →</a>`;
+  return `<p class="eyebrow">Speak Now ${lv} · Unit ${u.n} · Bài ${l} · trang ${les.pages}</p><h2>${esc(les.title)}</h2>
+  <p class="lead">Học theo thứ tự trong sách: Vocabulary → Conversation → Language Booster → Pronunciation hoặc Listening → Speak with Confidence.</p>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  <div class="grid2">${refBox('Trong sách và đĩa audio',[['Sách',`Speak Now ${lv} · trang ${les.pages}`],...les.tracks.map((t,i)=>[`${i+1}. ${t.sec||'Audio'}`,`CD${t.cd} · Track ${pad(t.tr)}`])])}${snSteps()}</div>
+  <div class="pager">${prev}<a class="btn" href="#unit${lv}-${u.n}">Cả Unit ${u.n}</a>${nx}</div>`}
+function vEia(lv,un){const u=SN[lv][un-1];const k=`sn${lv}-u${un}`;
+  return `<p class="eyebrow">Speak Now ${lv} · Unit ${un} · trang ${u.eiaPages}</p><h2>English in Action + ôn tập Unit ${un}</h2>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  <div class="grid2">${refBox('Trong sách và video',[['Sách',`Speak Now ${lv} · trang ${u.eiaPages}`],['Video',`English in Action · Unit ${un}`]])}${eiaSteps()}</div>
+  <div class="pager"><a class="btn" href="#sn${lv}-${un*4}">← Bài ${un*4}</a><a class="btn" href="#unit${lv}-${un}">Cả Unit ${un}</a>${un<8?`<a class="btn" href="#sn${lv}-${un*4+1}">Bài ${un*4+1} →</a>`:''}</div>`}
+function vVoc(n){const v=D.voc[n-1];const k='voc-'+n;
+  return `<p class="eyebrow">English Vocabulary in Use · Elementary · Unit ${n}</p><h2>${esc(v.title)}</h2>
+  <div style="margin:10px 0">${doneBox(k)}</div>
+  <div class="grid2">${refBox('Trong sách',[['Sách',`English Vocabulary in Use Elementary · Unit ${n}`],['Trang',v.bookPages],['Đáp án',`Answer key cuối sách, mục ${n}.1, ${n}.2 …`]])}${vocSteps()}</div>
+  <div class="pager">${n>1?`<a class="btn" href="#voc-${n-1}">← Unit ${n-1}</a>`:'<span></span>'}${n<60?`<a class="btn" href="#voc-${n+1}">Unit ${n+1} →</a>`:''}</div>`}
+function vPron(r){const p=D.pr[r];const k='pr-'+r;
+  const steps=r==='r'?`<li>Chọn 5 âm bạn hay đọc sai nhất (ví dụ /ɪ/–/iː/, /θ/, /ð/, /ʃ/, âm cuối /s/ /z/).</li><li>Mở BBC The Sounds of English, xem lại video của từng âm.</li><li>Đọc to 10 từ chuyên ngành có các âm đó (concrete, thickness, schedule, measure, beams…), ghi âm và so với Cambridge Dictionary.</li>`
+   :`<li>Mở BBC The Sounds of English, chọn từng ${r==='v'?'nguyên âm':'phụ âm'} trong bảng IPA.</li><li>Xem video, chú ý khẩu hình miệng, vị trí lưỡi và độ dài âm.</li><li>Đọc to các từ ví dụ trong video, ghi âm và so sánh.</li><li>Tra 5 từ chuyên ngành của bạn trên Cambridge Dictionary, nghe giọng Anh và Mỹ, đọc theo.</li>`;
+  return `<p class="eyebrow">Phát âm</p><h2>${esc(p.title)}</h2>
+  <p class="lead">Mỗi ngày 10 phút, làm trước khi học các phần khác.</p>
+  <div style="margin:10px 0;display:flex;gap:8px;flex-wrap:wrap">${doneBox(k)}<a class="btn ext" href="${BBC_PRON}" target="_blank" rel="noopener">BBC: The Sounds of English</a><a class="btn ext" href="${CAMB}" target="_blank" rel="noopener">Cambridge Dictionary</a></div>
+  <section class="panel"><h3 style="margin-top:0">Các bước</h3><ol class="routine">${steps}</ol></section>`}
+function vHow(){selWeek=null;
+  return `<p class="eyebrow">Cách học</p><h2>Học thế nào cho chắc nền</h2>
+  <p class="lead">Trang này là lộ trình và hướng dẫn. Các bài Speak Now và Vocabulary in Use học bằng sách và audio của bạn, theo đúng trang và track ghi trong từng bài.</p>
+  <div class="grid2" style="margin-top:12px"><section class="panel"><h3 style="margin-top:0">Một bài Speak Now</h3><ol class="routine">
+  <li><b>Vocabulary:</b> đọc to từng từ, đánh dấu từ chưa biết.</li>
+  <li><b>Conversation:</b> nghe 2 lần không nhìn chữ, sau đó vừa nghe vừa đọc lời thoại.</li>
+  <li><b>Shadowing:</b> nghe từng câu, dừng và nói đè theo băng 3 lần, giảm tốc độ phát nếu trình phát nhạc của bạn cho phép.</li>
+  <li><b>Language Booster:</b> đọc to các mẫu câu, thay bằng thông tin của bạn (dự án, phần mềm, công trường).</li>
+  <li><b>Speak with Confidence:</b> tự nói cả hai vai, ghi âm bằng điện thoại, nghe lại và sửa.</li></ol></section>
+  <section class="panel"><h3 style="margin-top:0">VOA, từ vựng, thì</h3><ol class="routine">
+  <li><b>VOA:</b> xem video bài học, bật phụ đề tiếng Anh, nhại theo Anna ở phần Speaking. Mỗi bài có phần tóm tắt ngữ pháp và quiz.</li>
+  <li><b>Vocabulary in Use:</b> học trang trái, làm bài trang phải ra giấy, chấm bằng Answer key cuối sách.</li>
+  <li><b>Thì:</b> đọc tóm tắt tiếng Việt trên trang này, tự đặt 3 câu về công việc, rồi làm bài British Council.</li>
+  <li><b>Đánh dấu:</b> tích ô bên trái mỗi mục khi xong. Tiến độ lưu trong trình duyệt của máy đang dùng.</li></ol>
+  <p class="note">Tuần bận thì cứ học chậm lại. Trang <i>Hôm nay</i> luôn đưa ra mục chưa xong tiếp theo.</p></section></div>`}
+
+render();
+</script>
+
+</body>
+</html>

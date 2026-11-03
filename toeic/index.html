@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Luyện TOEIC Listening và Reading: quy trình 10 đề ETS 2026 và Barron's 600 Essential Words.">
+<title>Luyện TOEIC ETS 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&display=swap">
+<style>
+
+/* Layout: a drawing-sheet title block on top, a 22-week schedule bar, then one working pane per view. */
+:root{
+  --paper:#f5f6f3; --sheet:#ffffff; --ink:#1d3557; --ink-2:#3d5a80; --fg:#1b2430; --muted:#5d6b7a;
+  --line:#d3d9df; --line-2:#e6eaee; --accent:#c8551b; --accent-soft:#fbe9df; --ok:#2f7d4f; --ok-soft:#e2f1e8;
+  --grid:rgba(29,53,87,.045);
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#10161d; --sheet:#161e27; --ink:#9cc0ea; --ink-2:#7fa3cc; --fg:#e4e9ee; --muted:#9aa7b4;
+  --line:#2b3642; --line-2:#222c37; --accent:#f08a4b; --accent-soft:#3a2418; --ok:#6cc28e; --ok-soft:#173226;
+  --grid:rgba(156,192,234,.05); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#10161d; --sheet:#161e27; --ink:#9cc0ea; --ink-2:#7fa3cc; --fg:#e4e9ee; --muted:#9aa7b4;
+  --line:#2b3642; --line-2:#222c37; --accent:#f08a4b; --accent-soft:#3a2418; --ok:#6cc28e; --ok-soft:#173226;
+  --grid:rgba(156,192,234,.05); color-scheme:dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--fg);font:15px/1.55 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px}
+a{color:var(--ink-2)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:16px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+/* title block */
+.tb{display:grid;grid-template-columns:minmax(0,1fr) auto;border:1.5px solid var(--ink);background:var(--sheet);border-radius:2px}
+.tb-main{padding:14px 16px;border-right:1.5px solid var(--ink);min-width:0}
+.tb-main h1{margin:0;font:700 clamp(22px,4vw,30px)/1.1 var(--f-display);color:var(--ink);letter-spacing:.01em;text-wrap:balance}
+.tb-main p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.tb-cells{display:grid;grid-template-columns:repeat(3,auto)}
+.tb-cell{padding:8px 14px;border-left:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-width:88px}
+.tb-cell:first-child{border-left:0}
+.tb-cell span{font:500 10px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tb-cell b{font:600 20px/1.2 var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums}
+@media (max-width:720px){.tb{grid-template-columns:1fr}.tb-main{border-right:0;border-bottom:1.5px solid var(--ink)}.tb-cells{grid-template-columns:repeat(3,1fr)}.tb-cell{min-width:0}}
+/* nav */
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+.nav a{font:500 13px var(--f-mono);text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--sheet);padding:6px 10px;border-radius:var(--r)}
+.nav a[aria-current="page"]{border-color:var(--ink);background:var(--ink);color:var(--sheet)}
+.sync{margin-left:auto;font:400 12px var(--f-mono);color:var(--muted);align-self:center}
+/* schedule bar */
+.sched{margin:14px 0 4px;overflow-x:auto;border:1px solid var(--line);background:var(--sheet);border-radius:var(--r)}
+.sched-in{display:grid;grid-template-columns:repeat(22,minmax(34px,1fr));min-width:760px}
+.ph{grid-row:1;font:500 10px/1.3 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line-2);border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ph:first-child{border-left:0}
+.wk{grid-row:2;display:flex;flex-direction:column;align-items:stretch;text-decoration:none;color:var(--fg);border-left:1px solid var(--line-2);padding:6px 4px 6px;gap:4px}
+.wk:first-of-type{border-left:0}
+.wk .num{font:600 12px var(--f-mono);text-align:center;color:var(--muted)}
+.wk .bar{height:30px;background:var(--line-2);border-radius:3px;position:relative;overflow:hidden}
+.wk .bar i{position:absolute;left:0;right:0;bottom:0;background:var(--ink-2);opacity:.85}
+.wk.full .bar i{background:var(--ok);opacity:1}
+.wk.cur .num{color:var(--accent)}
+.wk.cur .bar{outline:2px solid var(--accent);outline-offset:1px}
+.wk.sel{background:var(--accent-soft)}
+/* panes */
+h2{font:700 22px/1.2 var(--f-display);color:var(--ink);margin:22px 0 4px;letter-spacing:.01em;text-wrap:balance}
+h3{font:600 16px/1.3 var(--f-display);color:var(--ink);margin:18px 0 6px;letter-spacing:.02em}
+.eyebrow{font:500 11px/1.3 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);margin:2px 0 0;max-width:68ch}
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--sheet);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0}
+.panel.flush{padding:0;overflow:hidden}
+/* item rows */
+.group{margin-top:14px}
+.group-h{display:flex;align-items:baseline;gap:8px;margin:0 0 6px}
+.group-h b{font:600 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink)}
+.group-h span{font-size:12px;color:var(--muted)}
+.rows{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet)}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 12px;border-top:1px solid var(--line-2)}
+.row:first-child{border-top:0}
+.row .code{font:500 11px var(--f-mono);color:var(--muted);display:block}
+.row .ttl{font-weight:500;overflow-wrap:anywhere}
+.row.done .ttl{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+.chk{appearance:none;-webkit-appearance:none;width:22px;height:22px;border:1.5px solid var(--ink-2);border-radius:4px;margin:0;display:grid;place-content:center;cursor:pointer;background:var(--sheet)}
+.chk:checked{background:var(--ok);border-color:var(--ok)}
+.chk:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 13px var(--f-body);text-decoration:none;color:var(--ink);border:1px solid var(--ink-2);background:transparent;padding:5px 11px;border-radius:var(--r);cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--line-2)}
+.btn.pri{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.btn.pri:hover{opacity:.9}
+.btn.ext::after{content:"↗";font-size:12px}
+.btn.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+/* today */
+.today{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.routine{margin:0;padding-left:20px;max-width:70ch}
+.routine li{margin:3px 0}
+.note{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font:500 11px var(--f-mono);padding:1px 6px;border-radius:3px;background:var(--line-2);color:var(--ink);margin-right:6px}
+/* book viewer */
+.book{position:relative}
+.book-bar{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.book-bar span{font:500 12px var(--f-mono);color:var(--muted)}
+.book-scroll{overflow:auto;max-height:80vh;background:var(--line-2);-webkit-overflow-scrolling:touch}
+.book-scroll img{display:block;width:100%;height:auto;margin:0 auto;background:#fff}
+.book-scroll.zoom img{width:200%;max-width:none}
+/* tracks */
+.track{border-top:1px solid var(--line-2);padding:12px 14px}
+.track:first-child{border-top:0}
+.track-h{display:flex;gap:8px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.track-h b{font:600 14px var(--f-display);color:var(--ink);letter-spacing:.02em}
+.track-h code{font:500 11px var(--f-mono);color:var(--muted)}
+.track audio{width:100%;margin:8px 0 6px;height:40px}
+.tools{display:flex;gap:6px;flex-wrap:wrap}
+.tools .btn{padding:3px 9px;font-size:12px}
+.prompt{font-size:13px;color:var(--muted);font-style:italic;margin:6px 0 0}
+.script{white-space:pre-wrap;font:14px/1.6 var(--f-body);background:var(--paper);border:1px solid var(--line-2);border-radius:var(--r);padding:10px 12px;margin:8px 0 0;max-height:340px;overflow:auto}
+.vid{width:100%;display:block;background:#000;aspect-ratio:16/9;max-width:100%}
+/* tense card */
+.formula{display:grid;grid-template-columns:auto minmax(0,1fr);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:6px 0 10px}
+.formula div{padding:8px 12px;border-top:1px solid var(--line-2)}
+.formula div:nth-child(-n+2){border-top:0}
+.formula .k{font:600 13px var(--f-mono);color:var(--accent);background:var(--accent-soft);text-align:center;min-width:64px}
+.formula .v{font:500 14px var(--f-mono);color:var(--fg);overflow-wrap:anywhere}
+.ex{list-style:none;margin:0;padding:0}
+.ex li{padding:7px 0;border-top:1px dashed var(--line)}
+.ex li:first-child{border-top:0}
+.ex .en{font-weight:600}
+.ex .vi{color:var(--muted);font-size:14px}
+.err{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px 12px;font-size:14px}
+.err .bad{color:var(--accent)}
+.err .bad::before{content:"✗ ";font-weight:700}
+.err .good{color:var(--ok)}
+.err .good::before{content:"✓ ";font-weight:700}
+@media (max-width:560px){.err{grid-template-columns:minmax(0,1fr)}}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pager{display:flex;justify-content:space-between;gap:8px;margin-top:16px;flex-wrap:wrap}
+.foot{margin-top:36px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.slides img{display:block;width:100%;border-bottom:1px solid var(--line)}
+.unitlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.uc{border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);padding:10px 12px}
+.uc h4{margin:0 0 4px;font:600 14px var(--f-display);color:var(--ink);letter-spacing:.03em}
+.uc ol{margin:0;padding-left:18px;font-size:14px}
+.uc a{text-decoration:none}
+.uc a:hover{text-decoration:underline}
+.mini{font:500 11px var(--f-mono);color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+.seglist{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-top:1px solid var(--line-2)}
+.seglist .btn{padding:3px 8px;font:500 12px var(--f-mono)}
+.seglist .btn.on{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.player{padding:12px 14px}
+.player audio{width:100%;height:40px}
+.pages img{display:block;width:100%;background:#fff;border-bottom:1px solid var(--line)}
+.testgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tcard{display:block;border:1px solid var(--line);border-radius:var(--r);background:var(--sheet);padding:12px;text-decoration:none;color:var(--fg)}
+.tcard b{display:block;font:700 20px var(--f-display);color:var(--ink)}
+.tcard span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+</style>
+
+<style>
+.ref{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+.ref td{padding:7px 10px;border-top:1px solid var(--line-2);vertical-align:top}
+.ref tr:first-child td{border-top:0}
+.ref td:first-child{font-weight:600;width:46%}
+.ref td:last-child{font-family:var(--f-mono);font-size:13px}
+.pubnote{font-size:13px;color:var(--muted);margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="tb">
+    <div class="tb-main">
+      <h1>Luyện TOEIC · ETS 2026</h1>
+      <p>Lộ trình luyện 10 đề ETS 2026 và Barron's 600 Essential Words, học cùng sách và audio của bạn</p>
+    </div>
+    <div class="tb-cells">
+      <div class="tb-cell"><span>Đề</span><b>10</b></div>
+      <div class="tb-cell"><span>Bài từ vựng</span><b>50</b></div>
+      <div class="tb-cell"><span>Câu / đề</span><b>200</b></div>
+    </div>
+  </header>
+  <nav class="nav" aria-label="Mục chính">
+    <a href="#home" data-nav="home">Mục lục</a>
+    <a href="#ba" data-nav="ba">Barron's 600</a>
+    <a href="#how" data-nav="how">Cách luyện đề</a>
+    <a href="https://dotruong59nuce-sys.github.io/tieng-anh/b2/" target="_blank" rel="noopener" class="btn ext" style="margin-left:auto">Về lộ trình B2</a>
+  </nav>
+  <main id="view"></main>
+  <p class="foot">Trang công khai: không đăng lại đề thi, sách hay audio có bản quyền. Luyện bằng sách và audio của bạn. Tiến độ được tích trong trang lộ trình B2.</p>
+</div>
+<script>
+const D={"ets":[{"n":1},{"n":2},{"n":3},{"n":4},{"n":5},{"n":6},{"n":7},{"n":8},{"n":9},{"n":10}],"ba":[{"n":1,"t":"Contracts"},{"n":2,"t":"Marketing"},{"n":3,"t":"Warranties"},{"n":4,"t":"Business Planning"},{"n":5,"t":"Conferences"},{"n":6,"t":"Computers"},{"n":7,"t":"Office Technology"},{"n":8,"t":"Office Procedures"},{"n":9,"t":"Electronics"},{"n":10,"t":"Correspondence"},{"n":11,"t":"Job Advertising and Recruiting"},{"n":12,"t":"Applying and Interviewing"},{"n":13,"t":"Hiring and Training"},{"n":14,"t":"Salaries and Benefits"},{"n":15,"t":"Promotions, Pensions, and Awards"},{"n":16,"t":"Shopping"},{"n":17,"t":"Ordering Supplies"},{"n":18,"t":"Shipping"},{"n":19,"t":"Invoices"},{"n":20,"t":"Inventory"},{"n":21,"t":"Banking"},{"n":22,"t":"Accounting"},{"n":23,"t":"Investments"},{"n":24,"t":"Taxes"},{"n":25,"t":"Financial Statements"},{"n":26,"t":"Property and Departments"},{"n":27,"t":"Board Meetings and Committees"},{"n":28,"t":"Quality Control"},{"n":29,"t":"Product Development"},{"n":30,"t":"Renting and Leasing"},{"n":31,"t":"Selecting a Restaurant"},{"n":32,"t":"Eating Out"},{"n":33,"t":"Ordering Lunch"},{"n":34,"t":"Cooking as a Career"},{"n":35,"t":"Events"},{"n":36,"t":"General Travel"},{"n":37,"t":"Airlines"},{"n":38,"t":"Trains"},{"n":39,"t":"Hotels"},{"n":40,"t":"Car Rentals"},{"n":41,"t":"Movies"},{"n":42,"t":"Theater"},{"n":43,"t":"Music"},{"n":44,"t":"Museums"},{"n":45,"t":"Media"},{"n":46,"t":"Doctor's Office"},{"n":47,"t":"Dentist's Office"},{"n":48,"t":"Health Insurance"},{"n":49,"t":"Hospitals"},{"n":50,"t":"Pharmacy"}],"baGroups":["General Business","Office Issues","Personnel","Purchasing","Financing and Budgeting","Management Issues","Restaurants and Events","Travel","Entertainment","Health"]};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+function segPlayer(src,segs,label){
+  return `<section class="panel flush seg" data-segs='${esc(JSON.stringify(segs))}'><div class="book-bar"><span>${esc(label)}</span><span class="tools"><button class="btn" data-rate="0.85">0.85×</button><button class="btn on" data-rate="1">1×</button><button class="btn" data-loop>Lặp đoạn</button></span></div>
+  <div class="player"><audio controls preload="none" src="${src}"></audio></div>
+  <div class="seglist">${segs.map((s,i)=>`<button class="btn" data-seg="${i}">${esc(s.l)}</button>`).join('')}</div></section>`;
+}
+function pages(imgs,alt){return `<section class="panel flush pages">${imgs.map(s=>`<img src="${s}" alt="${esc(alt)}" loading="lazy">`).join('')}</section>`}
+function vHome(){
+  return `<p class="eyebrow">ETS 2026 · 10 đề</p><h2>Chọn đề để luyện</h2>
+  <p class="lead">Mỗi đề gồm Listening (100 câu, 45 phút) và Reading (100 câu, 75 phút). Làm trọn đề có bấm giờ, chấm bằng đáp án, sau đó nghe lại từng câu sai.</p>
+  <div class="testgrid" style="margin-top:12px">${D.ets.map(t=>`<a class="tcard" href="#ets-${t.n}"><span>ETS 2026</span><b>Test ${pad(t.n)}</b><span>LC + RC · audio từng câu</span></a>`).join('')}</div>
+  <h3>Đáp án và tài liệu chung</h3>
+  <div class="tools"><a class="btn" href="#keys">Đáp án 10 đề</a><a class="btn ext" href="ets/dictation.pdf" target="_blank" rel="noopener">Nghe chép chính tả ETS 2026 (PDF)</a><a class="btn" href="#ba">Barron's 600 Essential Words</a></div>`;
+}
+function vTest(n){
+  const t=D.ets[n-1];if(!t)return vHome();
+  const part=s=>{const a=parseInt(s.l);return a<=6?'P1':a<=31?'P2':a<=70?'P3':'P4'};
+  const firsts={};t.segs.forEach((s,i)=>{const p=part(s);if(!(p in firsts))firsts[p]=i});
+  return `<p class="eyebrow">ETS 2026 · Test ${pad(n)}</p><h2>Test ${n}</h2>
+  <p class="lead">Bấm số câu để nghe lại đúng câu đó. Part 1: câu 1–6, Part 2: 7–31, Part 3: 32–70, Part 4: 71–100.</p>
+  <div class="tabs"><a class="btn pri" href="#ets-${n}-lc">Listening</a><a class="btn" href="#ets-${n}-rc">Reading</a><a class="btn" href="#keys">Đáp án</a></div>
+  ${segPlayer(t.audio,t.segs,'Audio Listening · Test '+n)}
+  <div class="tools" style="margin:8px 0">${Object.entries(firsts).map(([p,i])=>`<button class="btn" data-jump="${i}">Bắt đầu ${p}</button>`).join('')}</div>
+  <h3 id="lc">Đề Listening</h3>${pages(t.lc,'Listening test '+n)}
+  <h3 id="rc">Đề Reading</h3>${pages(t.rc,'Reading test '+n)}
+  <div class="pager">${n>1?`<a class="btn" href="#ets-${n-1}">← Test ${n-1}</a>`:'<span></span>'}${n<10?`<a class="btn" href="#ets-${n+1}">Test ${n+1} →</a>`:''}</div>`;
+}
+function vKeys(){
+  return `<p class="eyebrow">Đáp án</p><h2>Đáp án 10 đề ETS 2026</h2><p class="lead">Bảng đáp án Listening và Reading của cả 10 đề.</p>
+  <h3>Listening</h3>${pages([D.keys.lc],'LC key')}<h3>Reading</h3>${pages([D.keys.rc,D.keys.rc2],'RC key')}`;
+}
+function vBaList(){
+  const blocks=[];for(let b=0;b<10;b++){const ls=D.ba.slice(b*5,b*5+5);blocks.push(`<div class="uc"><h4>${esc(D.baGroups[b])}</h4><ol start="${b*5+1}">${ls.map(l=>`<li><a href="#ba-${l.n}">${esc(l.t)}</a></li>`).join('')}</ol><a class="mini" href="#wr-${b+1}">Word Review #${b+1}</a></div>`)}
+  return `<p class="eyebrow">Barron's 600 Essential Words for the TOEIC</p><h2>50 bài × 12 từ</h2>
+  <p class="lead">Mỗi bài: đọc 12 từ và ví dụ, nghe audio, làm bài tập, chấm bằng đáp án ở cuối sách. Sau mỗi 5 bài có Word Review.</p>
+  <div class="unitlist" style="margin-top:10px">${blocks.join('')}</div>
+  <h3>Đáp án</h3><div class="tools">${D.baKey.map((k,i)=>`<a class="btn" href="#bakey-${i+1}">Trang đáp án ${i+1}</a>`).join('')}</div>`;
+}
+function vBa(n){
+  const l=D.ba[n-1];if(!l)return vBaList();
+  return `<p class="eyebrow">Barron's 600 · Lesson ${n}</p><h2>${esc(l.t)}</h2>
+  <p class="lead">Nghe audio 2 lần: lần đầu nhìn sách, lần sau che sách và nhắc lại từng từ. Làm bài tập rồi chấm ở trang đáp án.</p>
+  <section class="panel flush"><div class="book-bar"><span>Audio Lesson ${n}</span><span class="tools"><button class="btn" data-rate2="0.85">0.85×</button><button class="btn on" data-rate2="1">1×</button></span></div><div class="player"><audio controls preload="none" src="${l.a}"></audio></div></section>
+  <div style="margin-top:12px">${pages([l.img],'Lesson '+n)}</div>
+  <div class="pager">${n>1?`<a class="btn" href="#ba-${n-1}">← Lesson ${n-1}</a>`:'<span></span>'}<a class="btn" href="#bakey-${n<=15?1:n<=32?2:n<=49?3:4}">Đáp án</a>${n<50?`<a class="btn" href="#ba-${n+1}">Lesson ${n+1} →</a>`:''}</div>`;
+}
+function vWr(w){return `<p class="eyebrow">Barron's 600</p><h2>Word Review #${w}</h2>${pages([D.wr[w-1]],'Word review')}<div class="pager"><a class="btn" href="#ba">← Danh sách bài</a><a class="btn" href="#bakey-${w<=3?1:w<=6?2:w<=9?3:4}">Đáp án</a></div>`}
+function vBaKey(i){return `<p class="eyebrow">Barron's 600</p><h2>Đáp án · trang ${i}</h2>${pages([D.baKey[i-1]],'Answer key')}<div class="pager"><a class="btn" href="#ba">← Danh sách bài</a></div>`}
+function vHow(){
+  return `<p class="eyebrow">Cách luyện đề</p><h2>Quy trình 1 đề mỗi tuần</h2>
+  <div class="grid2" style="margin-top:12px"><section class="panel"><h3 style="margin-top:0">Buổi 1–2: làm đề</h3><ol class="routine">
+  <li>Listening: bấm play một lần, làm liền 100 câu, không dừng (45 phút).</li>
+  <li>Reading: bấm giờ 75 phút, làm ra giấy.</li>
+  <li>Chấm bằng trang <b>Đáp án</b>, ghi lại số câu đúng từng Part.</li></ol></section>
+  <section class="panel"><h3 style="margin-top:0">Buổi 3–5: chữa đề</h3><ol class="routine">
+  <li>Nghe lại từng câu sai: bấm số câu, bật <i>Lặp đoạn</i>, nghe đến khi hiểu hết.</li>
+  <li>Part 3–4: nhại theo (shadowing) 2 đoạn hội thoại mỗi ngày.</li>
+  <li>Reading: chép các từ mới vào sổ, tra trên Cambridge Dictionary.</li>
+  <li>Mở file <i>Nghe chép chính tả</i> để luyện nghe điền từ phần của đề đó.</li></ol></section></div>`;
+}
+function render(){
+  const h=(location.hash||'#home').slice(1);let m,html,scroll=null;
+  if(h==='keys')html=vKeys();
+  else if(h==='ba')html=vBaList();
+  else if(h==='how')html=vHow();
+  else if(m=h.match(/^ets-(\d+)(?:-(lc|rc))?$/)){html=vTest(+m[1]);scroll=m[2]||null}
+  else if(m=h.match(/^ba-(\d+)$/))html=vBa(+m[1]);
+  else if(m=h.match(/^wr-(\d+)$/))html=vWr(+m[1]);
+  else if(m=h.match(/^bakey-(\d)$/))html=vBaKey(+m[1]);
+  else html=vHome();
+  $('#view').innerHTML=html;
+  document.querySelectorAll('[data-nav]').forEach(a=>a.removeAttribute('aria-current'));
+  const nav=h==='ba'||h.startsWith('ba-')?'ba':h==='how'?'how':(h==='home'||!h||h.startsWith('ets')||h==='keys')?'home':null;
+  if(nav)document.querySelector(`[data-nav="${nav}"]`).setAttribute('aria-current','page');
+  if(scroll){const el=document.getElementById(scroll);if(el)setTimeout(()=>el.scrollIntoView(),50)}
+}
+window.addEventListener('hashchange',()=>{render();if(!/-(lc|rc)$/.test(location.hash))window.scrollTo(0,0)});
+let stopAt=null,loopSeg=null;
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  const box=b.closest('.seg');
+  if(box){const a=box.querySelector('audio');const segs=JSON.parse(box.dataset.segs);
+    if(b.dataset.seg!==undefined||b.dataset.jump!==undefined){}
+    if(b.hasAttribute('data-seg')){const s=segs[+b.dataset.seg];a.currentTime=s.s;stopAt=box.querySelector('[data-loop].on')?null:s.e;loopSeg=box.querySelector('[data-loop].on')?s:null;a.play();box.querySelectorAll('[data-seg]').forEach(x=>x.classList.toggle('on',x===b))}
+    else if(b.hasAttribute('data-rate')){a.playbackRate=+b.dataset.rate;box.querySelectorAll('[data-rate]').forEach(x=>x.classList.toggle('on',x===b))}
+    else if(b.hasAttribute('data-loop')){b.classList.toggle('on');const cur=box.querySelector('[data-seg].on');loopSeg=b.classList.contains('on')&&cur?segs[+cur.dataset.seg]:null;stopAt=null}
+    return}
+  if(b.hasAttribute('data-jump')){const bx=document.querySelector('.seg');const a=bx.querySelector('audio');const segs=JSON.parse(bx.dataset.segs);a.currentTime=segs[+b.dataset.jump].s;stopAt=null;loopSeg=null;a.play();return}
+  if(b.hasAttribute('data-rate2')){const a=b.closest('.panel').querySelector('audio');a.playbackRate=+b.dataset.rate2;b.parentElement.querySelectorAll('[data-rate2]').forEach(x=>x.classList.toggle('on',x===b))}
+});
+document.addEventListener('timeupdate',e=>{const a=e.target;if(a.tagName!=='AUDIO')return;
+  if(loopSeg&&a.currentTime>=loopSeg.e){a.currentTime=loopSeg.s}
+  else if(stopAt&&a.currentTime>=stopAt){a.pause();stopAt=null}},true);
+
+/* ---- public build: no copyrighted pages, audio or scripts ---- */
+const PUB_NOTE='Trang công khai không đăng lại sách và audio có bản quyền. Mở sách và đĩa audio của bạn theo đúng trang và track dưới đây.';
+function refBox(title,rows,extra){return `<section class="panel"><h3 style="margin-top:0">${esc(title)}</h3><p class="pubnote">${PUB_NOTE}</p><table class="ref">${rows.map(([a,b])=>`<tr><td>${esc(a)}</td><td>${esc(b)}</td></tr>`).join('')}</table>${extra||''}</section>`}
+const CAMB='https://dictionary.cambridge.org/dictionary/english-vietnamese/';
+function snSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li><b>Vocabulary:</b> đọc to từng từ, đánh dấu từ chưa biết, tra phát âm trên <a href="${CAMB}" target="_blank" rel="noopener">Cambridge Dictionary</a>.</li>
+<li><b>Conversation:</b> nghe 2 lần không nhìn chữ, sau đó vừa nghe vừa đọc lời thoại trong sách.</li>
+<li><b>Shadowing:</b> nghe từng câu, dừng lại và nói theo, lặp 3–5 lần đến khi trôi chảy.</li>
+<li><b>Language Booster:</b> đọc to mẫu câu, thay bằng thông tin công việc của bạn (dự án, phần mềm, công trường).</li>
+<li><b>Speak with Confidence:</b> tự nói cả hai vai, ghi âm bằng điện thoại, nghe lại và sửa.</li></ol></section>`}
+function eiaSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li>Xem video English in Action 2 lần: lần 1 không nhìn sách, lần 2 vừa xem vừa làm bài trên trang sách.</li>
+<li>Làm phần ôn tập của Unit: tự đóng cả hai vai trong các hội thoại.</li>
+<li>Ghi âm 1 phút tóm tắt nội dung video bằng lời của bạn.</li></ol></section>`}
+function vocSteps(){return `<section class="panel"><h3 style="margin-top:0">Các bước học</h3><ol class="routine">
+<li>Trang trái: đọc to từng từ và ví dụ, tra phát âm nếu chưa chắc.</li>
+<li>Trang phải: làm bài ra giấy, không nhìn trang trái.</li>
+<li>Chấm bằng Answer key ở cuối sách, chép từ sai vào sổ.</li>
+<li>Đặt 3 câu với từ mới về công việc của bạn và đọc to.</li></ol>
+<div class="tools"><a class="btn ext" href="${CAMB}" target="_blank" rel="noopener">Cambridge Dictionary</a><a class="btn ext" href="https://youglish.com/" target="_blank" rel="noopener">YouGlish</a></div></section>`}
+
+const PARTS=[['Part 1 · Mô tả tranh','1–6','Listening'],['Part 2 · Hỏi – đáp','7–31','Listening'],['Part 3 · Hội thoại','32–70','Listening'],['Part 4 · Bài nói ngắn','71–100','Listening'],['Part 5 · Hoàn thành câu','101–130','Reading'],['Part 6 · Hoàn thành đoạn văn','131–146','Reading'],['Part 7 · Đọc hiểu','147–200','Reading']];
+function vHome(){
+  return `<p class="eyebrow">ETS 2026 · 10 đề</p><h2>Chọn đề để luyện</h2>
+  <p class="lead">Mỗi đề gồm Listening (100 câu, khoảng 45 phút) và Reading (100 câu, 75 phút). Làm trọn đề có bấm giờ bằng sách và audio của bạn, chấm bằng đáp án cuối sách, sau đó nghe lại từng câu sai.</p>
+  <div class="testgrid" style="margin-top:12px">${D.ets.map(t=>`<a class="tcard" href="#ets-${t.n}"><span>ETS 2026</span><b>Test ${pad(t.n)}</b><span>Listening + Reading</span></a>`).join('')}</div>
+  <h3>Từ vựng</h3><div class="tools"><a class="btn" href="#ba">Barron's 600 Essential Words</a></div>`}
+function vTest(n){const t=D.ets[n-1];if(!t)return vHome();
+  return `<p class="eyebrow">ETS 2026 · Test ${pad(n)}</p><h2>Test ${n}</h2>
+  <div class="grid2" style="margin-top:12px">
+  <section class="panel"><h3 style="margin-top:0">Cấu trúc đề</h3><p class="pubnote">Trang công khai không đăng lại đề và audio có bản quyền. Dùng sách ETS 2026 và audio của bạn, Test ${n}.</p>
+  <table class="ref">${PARTS.map(([a,b,c])=>`<tr><td>${a}</td><td>câu ${b} · ${c}</td></tr>`).join('')}</table></section>
+  <section class="panel"><h3 style="margin-top:0">Các bước</h3><ol class="routine">
+  <li>Listening: phát audio một lần, làm liền 100 câu, không dừng.</li>
+  <li>Reading: bấm giờ 75 phút, làm ra giấy.</li>
+  <li>Chấm bằng đáp án cuối sách, ghi số câu đúng của từng Part.</li>
+  <li>Chữa đề: tua audio đến từng câu sai, nghe đến khi hiểu hết. Part 3–4: nhại theo 2 đoạn mỗi ngày.</li>
+  <li>Reading: chép từ mới vào sổ, tra trên Cambridge Dictionary.</li></ol></section></div>
+  <div class="pager">${n>1?`<a class="btn" href="#ets-${n-1}">← Test ${n-1}</a>`:'<span></span>'}${n<10?`<a class="btn" href="#ets-${n+1}">Test ${n+1} →</a>`:''}</div>`}
+function vKeys(){return `<p class="eyebrow">Đáp án</p><h2>Đáp án 10 đề ETS 2026</h2><p class="lead">Đáp án Listening và Reading nằm ở cuối sách ETS 2026 của bạn.</p><div class="pager"><a class="btn" href="#home">← Mục lục</a></div>`}
+function vBaList(){
+  const blocks=[];for(let b=0;b<10;b++){const ls=D.ba.slice(b*5,b*5+5);blocks.push(`<div class="uc"><h4>${esc(D.baGroups[b])}</h4><ol start="${b*5+1}">${ls.map(l=>`<li><a href="#ba-${l.n}">${esc(l.t)}</a></li>`).join('')}</ol><a class="mini" href="#wr-${b+1}">Word Review #${b+1}</a></div>`)}
+  return `<p class="eyebrow">Barron's 600 Essential Words for the TOEIC</p><h2>50 bài × 12 từ</h2>
+  <p class="lead">Mỗi bài: đọc 12 từ và ví dụ, nghe audio, làm bài tập, chấm bằng đáp án cuối sách. Sau mỗi 5 bài có Word Review.</p>
+  <div class="unitlist" style="margin-top:10px">${blocks.join('')}</div>`}
+function vBa(n){const l=D.ba[n-1];if(!l)return vBaList();
+  return `<p class="eyebrow">Barron's 600 · Lesson ${n}</p><h2>${esc(l.t)}</h2>
+  <div class="grid2" style="margin-top:12px">${refBox('Trong sách và đĩa audio',[['Sách',`Barron's 600 Essential Words for the TOEIC · Lesson ${n}`],['Audio',`Track ${n}`],['Đáp án','Answer key cuối sách']])}
+  <section class="panel"><h3 style="margin-top:0">Các bước</h3><ol class="routine"><li>Nghe audio 2 lần: lần đầu nhìn sách, lần sau che sách và nhắc lại từng từ.</li><li>Làm bài tập, chấm bằng đáp án cuối sách.</li><li>Đặt 1 câu với mỗi từ về công việc của bạn.</li></ol></section></div>
+  <div class="pager">${n>1?`<a class="btn" href="#ba-${n-1}">← Lesson ${n-1}</a>`:'<span></span>'}<a class="btn" href="#ba">Danh sách bài</a>${n<50?`<a class="btn" href="#ba-${n+1}">Lesson ${n+1} →</a>`:''}</div>`}
+function vWr(w){return `<p class="eyebrow">Barron's 600</p><h2>Word Review #${w}</h2><p class="lead">Làm Word Review #${w} trong sách (sau Lesson ${w*5}), chấm bằng đáp án cuối sách.</p><div class="pager"><a class="btn" href="#ba">← Danh sách bài</a></div>`}
+function vBaKey(i){return `<p class="eyebrow">Barron's 600</p><h2>Đáp án Barron's 600</h2><p class="lead">Đáp án các bài tập và Word Review nằm ở cuối sách Barron's 600 Essential Words for the TOEIC.</p><div class="pager"><a class="btn" href="#ba">← Danh sách bài</a></div>`}
+function vHow(){
+  return `<p class="eyebrow">Cách luyện đề</p><h2>Quy trình 1 đề mỗi tuần</h2>
+  <div class="grid2" style="margin-top:12px"><section class="panel"><h3 style="margin-top:0">Buổi 1–2: làm đề</h3><ol class="routine">
+  <li>Listening: phát audio một lần, làm liền 100 câu, không dừng (khoảng 45 phút).</li>
+  <li>Reading: bấm giờ 75 phút, làm ra giấy.</li>
+  <li>Chấm bằng đáp án cuối sách, ghi lại số câu đúng từng Part.</li></ol></section>
+  <section class="panel"><h3 style="margin-top:0">Buổi 3–5: chữa đề</h3><ol class="routine">
+  <li>Nghe lại từng câu sai: tua audio đến câu đó, nghe đến khi hiểu hết.</li>
+  <li>Part 3–4: nhại theo (shadowing) 2 đoạn hội thoại mỗi ngày.</li>
+  <li>Reading: chép các từ mới vào sổ, tra trên Cambridge Dictionary.</li>
+  <li>Nghe chép chính tả 1 đoạn Part 3 hoặc 4 mỗi ngày.</li></ol></section></div>`}
+
+render();
+</script>
+
+</body>
+</html>
